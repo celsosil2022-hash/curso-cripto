@@ -1,0 +1,5 @@
+CURSO CRIPTO - VERSÃO PARA ÁREA DE TRABALHO
+Arquivos: index.html, manifest.webmanifest, sw.js e 3 ícones (.png).
+Publique os 6 arquivos num repositório do GitHub Pages (ex.: curso-cripto)
+e instale pelo Edge ou Chrome: menu ... > Aplicativos > Instalar este site como aplicativo.
+O progresso fica salvo no próprio computador. O tutor com IA funciona na versão online do Claude.
