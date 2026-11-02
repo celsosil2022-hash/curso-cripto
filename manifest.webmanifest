@@ -1,0 +1,16 @@
+{
+  "name": "Cripto: do zero à tese",
+  "short_name": "Curso Cripto",
+  "description": "Curso completo de criptoativos: fundamentos, plataformas, valuation, ICOs, risco e tributação no Brasil.",
+  "lang": "pt-BR",
+  "start_url": "./index.html#trilha",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#EEF1F4",
+  "theme_color": "#B86E12",
+  "icons": [
+    {"src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any"},
+    {"src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any"},
+    {"src": "icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable"}
+  ]
+}
