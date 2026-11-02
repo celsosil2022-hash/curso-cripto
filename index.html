@@ -1,0 +1,1020 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#B86E12">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>Cripto: do zero à tese</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#EEF1F4;--surface:#FFFFFF;--surface2:#F6F8FA;--ink:#15233D;--muted:#5A6678;--line:#D5DBE3;
+  --accent:#B86E12;--accent-soft:#F6E7D2;--on-accent:#FFFFFF;--ok:#2E7D5B;--ok-soft:#DDF0E6;--bad:#B23A3A;--bad-soft:#F7E1E1;--chain:#A3AFC0;
+  --sans:"Manrope",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --serif:"Source Serif 4",Georgia,"Times New Roman",serif;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0F1724;--surface:#172234;--surface2:#1C2940;--ink:#E6EBF2;--muted:#9AA7BA;--line:#2A3850;
+    --accent:#E39A3B;--accent-soft:#3A2C17;--on-accent:#1A1206;--ok:#5CC08F;--ok-soft:#173A2A;--bad:#E06B6B;--bad-soft:#3D1D1D;--chain:#3C4C66;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0F1724;--surface:#172234;--surface2:#1C2940;--ink:#E6EBF2;--muted:#9AA7BA;--line:#2A3850;
+  --accent:#E39A3B;--accent-soft:#3A2C17;--on-accent:#1A1206;--ok:#5CC08F;--ok-soft:#173A2A;--bad:#E06B6B;--bad-soft:#3D1D1D;--chain:#3C4C66;
+  color-scheme:dark;
+}
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 64px);-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.55}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--surface)}
+a{color:var(--accent)}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:6px}
+img,svg{max-width:100%}
+
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--surface);border-bottom:1px solid var(--line)}
+.top-in{max-width:760px;margin:0 auto;padding:10px 16px;display:flex;align-items:center;gap:12px}
+.brand{white-space:nowrap;font-weight:800;letter-spacing:-.01em;font-size:15px;text-decoration:none;color:var(--ink);display:flex;align-items:center;gap:8px}
+.brand-mark{width:22px;height:22px;border-radius:5px;background:var(--accent);display:grid;place-items:center;color:var(--on-accent);font-size:12px;font-weight:800}
+.prog{margin-left:auto;display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted);white-space:nowrap}
+.prog-bar{width:72px;height:6px;border-radius:3px;background:var(--line);overflow:hidden}
+.prog-bar i{display:block;height:100%;background:var(--accent);transition:width .4s}
+.theme-btn{border:1px solid var(--line);background:transparent;border-radius:8px;width:32px;height:32px;cursor:pointer;color:var(--muted)}
+
+main{max-width:760px;margin:0 auto;padding:20px 16px 110px}
+.nav{position:fixed;left:0;right:0;bottom:0;z-index:6;background:var(--surface);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom,0px)}
+.nav-in{max-width:760px;margin:0 auto;display:grid;grid-template-columns:repeat(5,1fr)}
+.nav a{display:flex;flex-direction:column;align-items:center;gap:2px;padding:8px 2px 10px;text-decoration:none;color:var(--muted);font-size:11.5px;font-weight:600}
+.nav a svg{width:22px;height:22px}
+.nav a[aria-current="page"]{color:var(--accent)}
+
+h1,h2,h3{line-height:1.2;letter-spacing:-.015em}
+.hero{padding:8px 0 18px}
+.hero h1{font-family:var(--serif);font-size:clamp(30px,8vw,44px);font-weight:700;margin:0 0 10px}
+.hero p{margin:0;color:var(--muted);max-width:56ch}
+.hero-stats{display:flex;gap:18px;margin-top:16px;flex-wrap:wrap;font-size:14px}
+.hero-stats b{font-size:20px;display:block;color:var(--ink)}
+.hero-stats span{color:var(--muted)}
+.resume{margin-top:18px;display:flex;align-items:center;gap:12px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px;text-decoration:none;color:var(--ink)}
+.resume small{display:block;color:var(--muted);font-size:12.5px}
+.resume b{font-weight:700}
+.resume .go{margin-left:auto;background:var(--accent);color:var(--on-accent);border-radius:8px;padding:8px 12px;font-weight:700;font-size:14px;white-space:nowrap}
+
+/* the chain */
+.chain{position:relative;margin-top:8px}
+.block{position:relative;background:var(--surface);border:1.5px solid var(--line);border-radius:14px;margin-bottom:26px}
+.block::after{content:"";position:absolute;left:34px;bottom:-27px;width:12px;height:26px;border:3px solid var(--chain);border-radius:7px;background:transparent}
+.block:last-child::after{display:none}
+.block.mined{border-color:var(--accent)}
+.block.mined::after{border-color:var(--accent)}
+.block-head{width:100%;display:flex;align-items:center;gap:14px;padding:14px;background:none;border:0;text-align:left;cursor:pointer}
+.cube{flex:none;width:52px;height:52px;border-radius:10px;border:1.5px solid var(--line);display:grid;place-items:center;font-weight:800;font-size:18px;background:var(--surface2);position:relative;overflow:hidden}
+.cube i{position:absolute;left:0;bottom:0;width:100%;background:var(--accent-soft);z-index:0;transition:height .5s}
+.cube span{position:relative;z-index:1}
+.mined .cube{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.mined .cube i{display:none}
+.block-title{font-weight:700;font-size:16.5px;line-height:1.25}
+.block-meta{font-size:13px;color:var(--muted);margin-top:2px}
+.chev{margin-left:auto;color:var(--muted);transition:transform .2s;flex:none}
+.block.open .chev{transform:rotate(180deg)}
+.lessons{display:none;border-top:1px solid var(--line);padding:4px 0}
+.block.open .lessons{display:block}
+.lesson-link{display:flex;align-items:center;gap:12px;padding:11px 14px;text-decoration:none;color:var(--ink);font-size:15px}
+.lesson-link + .lesson-link{border-top:1px dashed var(--line)}
+.dot{flex:none;width:20px;height:20px;border-radius:50%;border:2px solid var(--chain);display:grid;place-items:center}
+.done .dot{background:var(--ok);border-color:var(--ok);color:#fff}
+.lesson-link small{margin-left:auto;color:var(--muted);font-size:12.5px;white-space:nowrap}
+
+/* lesson */
+.crumbs{font-size:13px;color:var(--muted);margin-bottom:6px}
+.crumbs a{color:var(--muted)}
+.lesson h1{font-family:var(--serif);font-size:clamp(26px,6.5vw,36px);margin:0 0 6px}
+.lesson .meta{color:var(--muted);font-size:13.5px;margin-bottom:18px}
+.prose{font-family:var(--serif);font-size:18px;line-height:1.65;max-width:68ch}
+.prose p{margin:0 0 1em}
+.prose h3{font-family:var(--sans);font-size:16px;margin:1.5em 0 .5em}
+.prose ul,.prose ol{padding-left:1.2em;margin:0 0 1em}
+.prose li{margin-bottom:.35em}
+.prose strong{font-weight:700}
+.key{border-left:3px solid var(--accent);background:var(--surface);padding:12px 14px;border-radius:0 10px 10px 0;margin:1.2em 0;font-family:var(--sans);font-size:15.5px;line-height:1.5}
+.tbl{overflow-x:auto;margin:0 0 1.2em;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-family:var(--sans);font-size:14px;line-height:1.4}
+th,td{text-align:left;padding:9px 11px;border-bottom:1px solid var(--line);vertical-align:top}
+th{background:var(--surface2);font-weight:700;white-space:nowrap}
+tr:last-child td{border-bottom:0}
+code,.mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.86em;background:var(--surface2);border:1px solid var(--line);border-radius:5px;padding:1px 5px}
+pre{background:var(--surface2);border:1px solid var(--line);border-radius:10px;padding:12px;overflow-x:auto;font-size:13px;line-height:1.5}
+pre code{background:none;border:0;padding:0}
+
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;margin:22px 0}
+.panel h2{font-size:17px;margin:0 0 10px;display:flex;align-items:center;gap:8px}
+.panel h2 .ic{width:26px;height:26px;border-radius:7px;display:grid;place-items:center;background:var(--accent-soft);color:var(--accent);font-size:14px}
+.panel ol,.panel ul{margin:0;padding-left:1.2em}
+.panel li{margin-bottom:.45em}
+.q{border-top:1px solid var(--line);padding-top:14px;margin-top:14px}
+.q:first-of-type{border-top:0;margin-top:0;padding-top:0}
+.q p{font-weight:600;margin:0 0 10px}
+.opt{display:block;width:100%;text-align:left;background:var(--surface2);border:1.5px solid var(--line);border-radius:10px;padding:10px 12px;margin-bottom:8px;cursor:pointer;font-size:15px;line-height:1.4}
+.opt:hover{border-color:var(--chain)}
+.opt.right{background:var(--ok-soft);border-color:var(--ok)}
+.opt.wrong{background:var(--bad-soft);border-color:var(--bad)}
+.opt:disabled{cursor:default}
+.expl{font-size:14.5px;color:var(--muted);margin:4px 0 0;display:none}
+.answered .expl{display:block}
+.src li{font-size:14.5px}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin:24px 0}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:10px;padding:12px 16px;font-weight:700;font-size:15px;cursor:pointer;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);text-decoration:none}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.btn.okb{background:var(--ok);border-color:var(--ok);color:#fff}
+.pager{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px}
+.pager a{display:block;border:1px solid var(--line);border-radius:12px;padding:10px 12px;text-decoration:none;color:var(--ink);background:var(--surface);font-size:14px}
+.pager a small{display:block;color:var(--muted);font-size:12px}
+.pager .next{text-align:right;grid-column:2}
+
+/* tools */
+.section-title{font-family:var(--serif);font-size:clamp(26px,6.5vw,34px);margin:0 0 6px}
+.section-sub{color:var(--muted);margin:0 0 18px;max-width:60ch}
+.tool-tabs{display:flex;gap:8px;overflow-x:auto;padding-bottom:6px;margin-bottom:6px;scrollbar-width:none}
+.tool-tabs button{flex:none;border:1.5px solid var(--line);background:var(--surface);border-radius:999px;padding:8px 14px;cursor:pointer;font-weight:600;font-size:14px}
+.tool-tabs button[aria-pressed="true"]{background:var(--ink);color:var(--surface);border-color:var(--ink)}
+.field{display:grid;gap:4px;margin-bottom:12px}
+.field label{font-size:13.5px;font-weight:600}
+.field small{color:var(--muted);font-size:12.5px}
+input[type=number],input[type=text],select,textarea{width:100%;font:inherit;font-size:16px;color:var(--ink);background:var(--surface2);border:1.5px solid var(--line);border-radius:10px;padding:10px 12px}
+textarea{min-height:96px;resize:vertical}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media (max-width:480px){.grid2{grid-template-columns:1fr}}
+.out{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-top:6px}
+.out div{background:var(--surface2);border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+.out small{display:block;color:var(--muted);font-size:12.5px}
+.out b{font-size:18px}
+.verdict{margin-top:12px;padding:12px 14px;border-radius:10px;font-weight:600;font-size:15px}
+.verdict.good{background:var(--ok-soft);color:var(--ok)}
+.verdict.mid{background:var(--accent-soft);color:var(--accent)}
+.verdict.badv{background:var(--bad-soft);color:var(--bad)}
+.crit{padding:10px 0;border-bottom:1px dashed var(--line)}
+.crit:last-of-type{border-bottom:0}
+.crit-top{display:flex;justify-content:space-between;gap:10px;font-weight:600;font-size:14.5px}
+.crit-top span{color:var(--accent);font-variant-numeric:tabular-nums}
+.crit small{color:var(--muted);font-size:13px;display:block;margin:2px 0 6px}
+input[type=range]{width:100%;accent-color:var(--accent)}
+.flag{display:flex;gap:10px;align-items:flex-start;padding:7px 0;font-size:14.5px;cursor:pointer}
+.flag input{margin-top:4px;accent-color:var(--bad);width:18px;height:18px;flex:none}
+
+/* library & glossary */
+.lib h2{font-size:18px;margin:26px 0 10px}
+.item{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-bottom:10px}
+.item b{display:block}
+.item .who{color:var(--muted);font-size:13.5px}
+.item p{margin:6px 0 0;font-size:14.5px}
+.tag{display:inline-block;font-size:12px;font-weight:700;border-radius:6px;padding:1px 7px;margin-left:6px;vertical-align:1px;background:var(--surface2);border:1px solid var(--line);color:var(--muted)}
+.search{margin-bottom:14px}
+dl.gl{margin:0}
+.gl div{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-bottom:8px}
+.gl dt{font-weight:700}
+.gl dd{margin:4px 0 0;color:var(--muted);font-size:15px}
+
+/* tutor */
+.answer{font-family:var(--serif);font-size:17px;line-height:1.6;white-space:pre-wrap;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px;margin-top:14px;display:none}
+.note{font-size:13.5px;color:var(--muted)}
+.chip{display:inline-block;border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 12px;font-size:13.5px;margin:0 6px 8px 0;cursor:pointer}
+.plan-week{display:grid;grid-template-columns:56px 1fr;gap:10px;padding:10px 0;border-bottom:1px dashed var(--line);font-size:15px}
+.plan-week:last-child{border-bottom:0}
+.plan-week b{color:var(--accent)}
+.sync{font-size:12.5px;color:var(--muted);margin-top:28px;text-align:center}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<header class="top"><div class="top-in">
+  <a class="brand" href="#trilha"><span class="brand-mark">₿</span>Curso Cripto</a>
+  <div class="prog" aria-label="Progresso do curso"><span id="progTxt">0/0</span><span class="prog-bar"><i id="progBar" style="width:0"></i></span></div>
+  <button class="theme-btn" id="themeBtn" aria-label="Alternar tema claro/escuro">◐</button>
+</div></header>
+
+<main id="app"></main>
+
+<nav class="nav" aria-label="Seções"><div class="nav-in">
+  <a href="#trilha" data-r="trilha"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="3" width="8" height="6" rx="1.5"/><rect x="12" y="15" width="8" height="6" rx="1.5"/><path d="M8 9v4a2 2 0 0 0 2 2h2"/></svg>Trilha</a>
+  <a href="#ferramentas" data-r="ferramentas"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 7h8M8 12h2M14 12h2M8 16h2M14 16h2"/></svg>Ferramentas</a>
+  <a href="#plano" data-r="plano"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>Plano</a>
+  <a href="#biblioteca" data-r="biblioteca"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 4h4v16H5zM10 4h4v16h-4zM15.5 5l3.6-.9 3.4 15.6-3.6.8z"/></svg>Biblioteca</a>
+  <a href="#tutor" data-r="tutor"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 5h16v11H9l-5 4z"/><path d="M9 10h6"/></svg>Tutor</a>
+</div></nav>
+
+<script>
+/* ============ CONTEÚDO ============ */
+const C = [
+{t:"Fundamentos: o que você está comprando", d:"Bitcoin, blockchain, custódia e a taxonomia dos ativos.", L:[
+{t:"Por que o Bitcoin existe", min:12, b:`
+<p>O Bitcoin resolve um problema específico: transferir valor digital entre desconhecidos <strong>sem uma contraparte central</strong> que evite o gasto duplo. O whitepaper de Satoshi Nakamoto (31/10/2008) combina criptografia, um livro-razão público e incentivos econômicos (mineração) para que a rede chegue a consenso sobre quem possui o quê.</p>
+<h3>A política monetária é o produto</h3>
+<ul><li>Oferta máxima de 21 milhões, com emissão decrescente: a recompensa por bloco cai pela metade a cada 210 mil blocos (~4 anos). O halving de abril/2024 levou a recompensa a 3,125 BTC; o próximo é esperado para 2028.</li>
+<li>Quase 20 milhões já foram emitidos — a inflação anual da oferta já está abaixo de 1%.</li>
+<li>A regra é crível porque alterá-la exige consenso de nós independentes, não decisão de um comitê.</li></ul>
+<div class="key"><strong>Leitura de CFO:</strong> BTC não gera fluxo de caixa. É um ativo monetário, como ouro — o valor depende de adoção, escassez crível e da demanda por reserva de valor fora do sistema bancário. Não cabe DCF; cabem análises de oferta/demanda, adoção e custo de oportunidade (juros reais, dólar).</div>
+<h3>Os três argumentos que sustentam a tese</h3>
+<ol><li><strong>Escassez programada</strong> num mundo de expansão monetária.</li><li><strong>Neutralidade e portabilidade</strong>: liquidação global 24/7, sem permissão.</li><li><strong>Efeito de rede</strong>: maior liquidez, segurança (hash rate) e reconhecimento de marca do setor.</li></ol>
+<p>E os contra-argumentos que você precisa levar a sério: volatilidade incompatível com “reserva de valor” no curto prazo, risco regulatório, dependência de narrativas e custo energético.</p>`,
+p:`<ol><li>Leia o whitepaper original (9 páginas) — foque nas seções 1, 4, 5 e 6.</li><li>Abra um explorador (mempool.space) e observe: altura do bloco atual, recompensa, taxas médias e tempo até o próximo ajuste de dificuldade.</li><li>Escreva em 5 linhas a tese de investimento do BTC e os 2 riscos que mais te preocupam. Guarde — você vai revisá-la no Módulo 8.</li></ol>`,
+q:[{q:"O que acontece a cada 210 mil blocos no Bitcoin?",o:["A oferta máxima aumenta","A recompensa por bloco cai pela metade","A dificuldade é zerada","Os mineradores votam a inflação"],a:1,e:"É o halving — reduz a emissão nova pela metade, aproximadamente a cada 4 anos."},
+{q:"Qual lente de valuation é mais adequada ao BTC?",o:["DCF de dividendos","Múltiplo de EBITDA","Ativo monetário: adoção, escassez e custo de oportunidade","Valor patrimonial"],a:2,e:"Sem fluxo de caixa, o BTC é avaliado como ativo monetário, à semelhança do ouro."}],
+s:["Nakamoto, S. (2008). Bitcoin: A Peer-to-Peer Electronic Cash System — bitcoin.org/bitcoin.pdf","Antonopoulos, A. — Mastering Bitcoin (capítulos 1–2)","mempool.space — explorador e métricas da rede"]},
+
+{t:"Blockchain e consenso", min:10, b:`
+<p>Uma blockchain é um livro-razão replicado em milhares de nós. Cada bloco contém transações e o <strong>hash</strong> do bloco anterior — alterar o passado exige refazer todo o trabalho subsequente, o que torna o histórico praticamente imutável.</p>
+<h3>Mecanismos de consenso</h3>
+<div class="tbl"><table><tr><th>Mecanismo</th><th>Como funciona</th><th>Exemplos</th><th>Implicação econômica</th></tr>
+<tr><td>Proof of Work</td><td>Mineradores gastam energia para propor blocos</td><td>Bitcoin</td><td>Custo de produção cria piso “físico”; emissão vai para mineradores</td></tr>
+<tr><td>Proof of Stake</td><td>Validadores travam capital (stake) como garantia</td><td>Ethereum (desde set/2022), Solana</td><td>Emissão vai para quem faz stake — gera “yield” nominal; quem não faz stake é diluído</td></tr></table></div>
+<h3>O trilema</h3>
+<p>Descentralização, segurança e escalabilidade competem entre si. Isso explica a proliferação de redes: cada uma escolhe um ponto diferente no trade-off. Para o investidor, a pergunta é: <em>que trade-off o mercado vai remunerar?</em></p>
+<div class="key">Staking não é receita: se a rede emite 5% ao ano e você recebe 5% de staking, seu ganho real em participação é zero. A métrica relevante é o <strong>real yield</strong> = yield de staking − inflação da oferta.</div>`,
+p:`<ol><li>Em etherscan.io, abra um bloco recente e identifique: transações, gas usado, ETH queimado e recompensa do validador.</li><li>Compare em ultrasound.money a emissão e a queima de ETH dos últimos 30 dias: a oferta está crescendo ou encolhendo?</li></ol>`,
+q:[{q:"Em uma rede PoS com inflação de 6% a.a. e staking de 6% a.a., o ganho real de quem faz stake é:",o:["12%","6%","Aproximadamente zero em participação","Negativo sempre"],a:2,e:"O staking só compensa a diluição. Ganho real vem de taxas/receitas acima da emissão."},
+{q:"Por que alterar um bloco antigo é tão difícil?",o:["Porque é proibido por lei","Porque cada bloco referencia o hash do anterior e exige refazer o consenso subsequente","Porque os dados são criptografados","Porque a exchange impede"],a:1,e:"O encadeamento por hash faz com que alterar o passado invalide todos os blocos seguintes."}],
+s:["Buterin, V. — Ethereum Whitepaper (2014), ethereum.org","ultrasound.money — emissão e queima de ETH","Etherscan — explorador de Ethereum"]},
+
+{t:"Chaves, endereços e custódia", min:10, b:`
+<p>Você não “guarda moedas”: guarda <strong>chaves privadas</strong> que autorizam movimentar saldos registrados na blockchain. Na prática, a chave é derivada de uma <strong>seed phrase</strong> de 12 ou 24 palavras (padrão BIP-39). Quem tem a seed, tem os ativos.</p>
+<h3>Modelos de custódia</h3>
+<div class="tbl"><table><tr><th>Modelo</th><th>Risco principal</th><th>Quando usar</th></tr>
+<tr><td>Exchange (custódia de terceiro)</td><td>Contraparte: insolvência, fraude, bloqueio</td><td>Valores de giro, operações frequentes</td></tr>
+<tr><td>ETF/fundo</td><td>Gestor e taxa; sem uso on-chain</td><td>Exposição simples, dentro da conta de investimentos</td></tr>
+<tr><td>Autocustódia (hardware wallet)</td><td>Erro operacional: perder a seed, phishing</td><td>Posição de longo prazo</td></tr>
+<tr><td>Multisig (ex.: 2 de 3)</td><td>Complexidade operacional</td><td>Patrimônio relevante, sucessão</td></tr></table></div>
+<div class="key">Novembro/2022, FTX: clientes perderam acesso a bilhões porque a exchange usava depósitos de clientes. A lição virou regra: <strong>“not your keys, not your coins”</strong>. No Brasil, as resoluções do BC de 2025 exigem segregação patrimonial das prestadoras — reduz, mas não elimina, o risco de contraparte.</div>
+<h3>Sucessão patrimonial</h3>
+<p>Cripto em autocustódia sem plano de sucessão é patrimônio perdido. Documente onde está a seed (sem escrevê-la no documento), use multisig ou carta de instruções sob guarda de advogado/holding.</p>`,
+p:`<ol><li>Instale uma carteira de software (ex.: Rabby ou Phantom) <strong>sem depositar nada</strong> e anote a seed em papel.</li><li>Apague a carteira e restaure com a seed. Só depois disso use-a com valores pequenos.</li><li>Rascunhe sua política de custódia: % em exchange, % em hardware wallet, quem sabe o quê em caso de sucessão.</li></ol>`,
+q:[{q:"O que de fato garante a posse dos criptoativos?",o:["O login da exchange","A seed phrase/chave privada","O CPF cadastrado","O e-mail de confirmação"],a:1,e:"Quem controla a chave privada controla os ativos na blockchain."},
+{q:"Principal risco de manter tudo em exchange:",o:["Taxa de gas","Risco de contraparte (insolvência, bloqueio)","Perder a seed","Halving"],a:1,e:"Em exchange você é credor da plataforma — o caso FTX ilustra o risco."}],
+s:["bitcoin.org — Proteja sua carteira","Casa / Unchained — guias de multisig e herança","Shin, L. — The Cryptopians (contexto histórico)"]},
+
+{t:"Taxonomia dos criptoativos", min:9, b:`
+<p>“Cripto” não é uma classe homogênea. Tratar BTC, um token de DeFi e uma memecoin como o mesmo ativo é o erro mais caro do iniciante. Cada categoria pede uma lente de análise diferente.</p>
+<div class="tbl"><table><tr><th>Categoria</th><th>Exemplos</th><th>Fonte de valor</th><th>Lente de análise</th></tr>
+<tr><td>Reserva de valor</td><td>BTC</td><td>Demanda monetária, escassez</td><td>Adoção, on-chain (MVRV), macro</td></tr>
+<tr><td>Plataforma L1</td><td>ETH, SOL</td><td>Demanda por espaço de bloco + ativo monetário da rede</td><td>Taxas, atividade, emissão vs queima</td></tr>
+<tr><td>Camada 2 (L2)</td><td>Arbitrum, Base, Optimism</td><td>Escala o L1; tokens muitas vezes com captura fraca</td><td>Receita líquida (fees − custo de dados)</td></tr>
+<tr><td>Stablecoin</td><td>USDT, USDC</td><td>Paridade 1:1 — não é investimento de valorização</td><td>Qualidade da reserva, emissor</td></tr>
+<tr><td>Protocolo DeFi</td><td>AAVE, UNI, HYPE</td><td>Receita de protocolo (taxas)</td><td>P/F, P/S, value accrual</td></tr>
+<tr><td>Infra/oráculos</td><td>LINK</td><td>Uso do serviço</td><td>Receita, dependência do ecossistema</td></tr>
+<tr><td>Tokenização (RWA)</td><td>títulos, fundos tokenizados</td><td>Ativo subjacente</td><td>Crédito e estrutura jurídica</td></tr>
+<tr><td>Memecoin</td><td>DOGE e afins</td><td>Atenção/narrativa</td><td>Especulação pura — tamanho mínimo</td></tr></table></div>
+<div class="key">Regra de bolso: quanto mais distante do topo da tabela, maior o risco idiossincrático e mais a análise deve parecer <strong>venture capital</strong> (time, produto, tração) do que análise de ativo monetário.</div>`,
+p:`<ol><li>Em coingecko.com, filtre o top 50 por capitalização e classifique cada ativo em uma das categorias acima.</li><li>Calcule o peso de BTC + ETH no market cap total. Esse é o “índice” do mercado — seu benchmark.</li></ol>`,
+q:[{q:"Qual lente é mais adequada para um token de protocolo DeFi?",o:["Escassez monetária","Receita de protocolo e múltiplos como P/F","Paridade 1:1","Hash rate"],a:1,e:"Protocolos DeFi geram taxas; múltiplos sobre receita são a referência."},
+{q:"Stablecoins servem principalmente para:",o:["Valorização de longo prazo","Liquidez, pagamentos e reserva em dólar on-chain","Votar em governança","Minerar"],a:1,e:"São instrumentos de liquidez — o risco relevante é a qualidade do lastro."}],
+s:["CoinGecko — categorias e rankings","Messari — Crypto Theses (relatório anual)"]}
+]},
+
+{t:"O ecossistema e seus casos de uso", d:"Ethereum, stablecoins, DeFi e institucionalização.", L:[
+{t:"Ethereum e contratos inteligentes", min:10, b:`
+<p>Ethereum é um computador global: contratos inteligentes executam regras financeiras sem intermediário (empréstimos, trocas, emissão de ativos). Cada operação consome <strong>gas</strong>, pago em ETH.</p>
+<h3>Por que ETH é um “ativo produtivo”</h3>
+<ul><li><strong>Staking</strong>: validadores recebem emissão + taxas de prioridade.</li><li><strong>Queima (EIP-1559, ago/2021)</strong>: a taxa base de cada transação é destruída — funciona como recompra contínua, proporcional ao uso.</li><li><strong>Colateral</strong>: ETH é o principal colateral do DeFi, o que gera demanda estrutural.</li></ul>
+<p>O debate atual: com a migração de atividade para as L2s, a queima no L1 caiu. A tese de ETH depende de as L2s e a tokenização gerarem demanda suficiente pelo espaço do L1.</p>
+<div class="key">Analogia útil: ETH ≈ ação de uma plataforma cuja “receita” (taxas) é parcialmente distribuída via queima (buyback) e staking (dividendo) — mas com emissão (diluição) do outro lado.</div>`,
+p:`<ol><li>No DefiLlama, compare as taxas (fees) de Ethereum, Solana e das principais L2s nos últimos 12 meses.</li><li>Monte no Excel: Receita anual de taxas ÷ Market cap = “fee yield”. Compare as três redes.</li></ol>`,
+q:[{q:"O que o EIP-1559 introduziu?",o:["Oferta máxima de ETH","Queima da taxa base das transações","Proof of Work","Halving"],a:1,e:"A taxa base é destruída, reduzindo a oferta conforme o uso da rede."},
+{q:"Por que a migração para L2s pressiona a tese de ETH?",o:["Porque L2s não usam Ethereum","Porque reduz taxas e queima no L1","Porque aumenta a oferta máxima","Porque acaba com o staking"],a:1,e:"Menos atividade no L1 significa menos queima; a captura de valor depende do que as L2s pagam ao L1."}],
+s:["ethereum.org — documentação","Russo, C. — The Infinite Machine","DefiLlama — fees por rede"]},
+
+{t:"Stablecoins", min:9, b:`
+<p>Stablecoins são o produto de maior encaixe de mercado do setor: dólares tokenizados que circulam 24/7. Somam centenas de bilhões de dólares em circulação e são a “base monetária” de exchanges e DeFi.</p>
+<div class="tbl"><table><tr><th>Modelo</th><th>Lastro</th><th>Risco</th></tr>
+<tr><td>Fiat-lastreada</td><td>Caixa e títulos do Tesouro (USDT, USDC)</td><td>Emissor, qualidade e transparência da reserva, congelamento</td></tr>
+<tr><td>Cripto-colateralizada</td><td>Excesso de colateral em cripto (DAI/USDS)</td><td>Liquidações em quedas bruscas</td></tr>
+<tr><td>Algorítmica</td><td>Mecanismo de mercado</td><td>Espiral de morte — Terra/UST colapsou em maio/2022</td></tr></table></div>
+<p>Nos EUA, o GENIUS Act (2025) criou o marco para emissores de stablecoins de pagamento. No Brasil, operações com stablecoins entram no regime cambial (Resolução BCB 521).</p>
+<div class="key">Para o seu caixa cripto: stablecoin rendendo “10% a.a.” em plataforma é crédito sem garantia a uma contraparte. Precifique como tal.</div>`,
+p:`<ol><li>Leia o relatório de atestação de reservas mais recente da Circle (USDC) e da Tether (USDT). Compare composição e auditor.</li></ol>`,
+q:[{q:"O colapso da Terra/UST em 2022 é exemplo do risco de qual modelo?",o:["Fiat-lastreada","Algorítmica","Cripto-colateralizada","CBDC"],a:1,e:"O mecanismo algorítmico entrou em espiral quando a confiança caiu."},
+{q:"Yield em stablecoin numa plataforma é, economicamente:",o:["Renda fixa garantida","Crédito/risco de contraparte","Dividendo","Isento de risco"],a:1,e:"Alguém está tomando seu dinheiro emprestado — o risco é de crédito."}],
+s:["Circle e Tether — relatórios de reservas","Resolução BCB nº 521/2025"]},
+
+{t:"DeFi: finanças sem intermediário", min:12, b:`
+<p>DeFi reconstrói serviços financeiros em contratos inteligentes. Os blocos principais:</p>
+<ul><li><strong>DEX/AMM</strong> (Uniswap): pools de liquidez precificam ativos por fórmula (x·y=k). Provedores de liquidez ganham taxas, mas sofrem <em>impermanent loss</em>.</li>
+<li><strong>Lending</strong> (Aave): empréstimos sobrecolateralizados; liquidação automática se o colateral cair.</li>
+<li><strong>Liquid staking</strong> (Lido): faz stake e devolve um token negociável.</li>
+<li><strong>Derivativos on-chain</strong> (Hyperliquid): perpétuos com livro de ofertas on-chain.</li></ul>
+<h3>As métricas que importam</h3>
+<div class="tbl"><table><tr><th>Métrica</th><th>O que mede</th><th>Armadilha</th></tr>
+<tr><td>TVL</td><td>Capital depositado</td><td>É estoque, não receita; inflado por incentivos</td></tr>
+<tr><td>Fees</td><td>Taxas pagas pelos usuários</td><td>Parte vai para LPs, não para o token</td></tr>
+<tr><td>Revenue</td><td>Parte das taxas retida pelo protocolo</td><td>Pode não chegar ao holder</td></tr>
+<tr><td>Earnings</td><td>Receita − incentivos em token</td><td>Frequentemente negativa — é o “lucro” real</td></tr></table></div>
+<div class="key">Riscos específicos: bug de contrato, manipulação de oráculo, depeg de colateral, governança capturada. Auditoria reduz, não elimina.</div>`,
+p:`<ol><li>No DefiLlama, abra Aave e Uniswap: anote TVL, fees e revenue anualizados.</li><li>Calcule TVL/Fees e Market cap/Revenue de cada um. Qual parece mais eficiente em capital?</li></ol>`,
+q:[{q:"Qual métrica DeFi mais se aproxima do lucro?",o:["TVL","Fees","Earnings (receita − incentivos em token)","Volume"],a:2,e:"Incentivos pagos em token são custo; earnings desconta isso."},
+{q:"O que dispara uma liquidação num protocolo de lending?",o:["O fim do mês","Queda do valor do colateral abaixo do limite","Pagamento antecipado","Halving"],a:1,e:"Se o colateral cai, o contrato vende para proteger o credor."}],
+s:["DefiLlama — TVL, fees, revenue","Token Terminal — demonstrativos de protocolos","Harvey, Ramachandran & Santoro — DeFi and the Future of Finance (Wiley, 2021)"]},
+
+{t:"Institucionalização e tokenização", min:8, b:`
+<p>O ciclo 2024–2026 marcou a entrada institucional: ETFs spot de bitcoin nos EUA (jan/2024) e de ether (jul/2024), gestoras tokenizando fundos de Treasuries, bancos emitindo stablecoins e empresas mantendo BTC em tesouraria.</p>
+<h3>Consequências para o investidor</h3>
+<ul><li><strong>Fluxo de ETFs</strong> virou indicador de demanda marginal acompanhado diariamente.</li><li><strong>Correlação com ativos de risco</strong> (Nasdaq, liquidez global) aumentou — o BTC reage a juros e dólar.</li><li><strong>Empresas-tesouraria</strong> alavancadas criam risco reflexivo: compram com dívida/emissão quando o preço sobe e podem ser forçadas a vender na queda.</li><li><strong>Tokenização (RWA)</strong>: o caso de uso mais aderente ao sistema financeiro tradicional; a captura de valor tende a ficar com as redes e os emissores, não necessariamente com tokens especulativos.</li></ul>
+<div class="key">No Brasil, a via mais simples de exposição é ETF de cripto na B3, dentro da conta de investimentos e com tributação de renda variável — compare custo total (taxa de administração) vs. compra direta.</div>`,
+p:`<ol><li>Liste os ETFs de cripto negociados na B3 e compare taxa de administração e ativo subjacente.</li><li>Acompanhe por 2 semanas o fluxo diário dos ETFs spot de BTC nos EUA (farside.co.uk) e anote a relação com o preço.</li></ol>`,
+q:[{q:"Por que empresas-tesouraria de BTC alavancadas criam risco reflexivo?",o:["Porque pagam dividendos","Porque podem ser forçadas a vender na queda, ampliando o movimento","Porque não podem comprar BTC","Porque mineram"],a:1,e:"Compra com dívida na alta e venda forçada na baixa amplificam ciclos."}],
+s:["Farside Investors — fluxos de ETFs","rwa.xyz — dados de tokenização"]}
+]},
+
+{t:"Plataformas na prática", d:"Exchanges, carteiras, on-chain e segurança — passo a passo.", L:[
+{t:"Como escolher uma exchange", min:9, b:`
+<p>A exchange é sua contraparte. Escolha como você escolheria um banco para o caixa da empresa.</p>
+<div class="tbl"><table><tr><th>Critério</th><th>O que verificar</th></tr>
+<tr><td>Situação regulatória</td><td>Pedido de autorização no Banco Central (prazo encerrado em 30/10/2026 para quem já operava) — consulte a lista oficial</td></tr>
+<tr><td>Prova de reservas</td><td>Publicação periódica, com passivos, auditada por terceiro</td></tr>
+<tr><td>Custo total</td><td>Taxa maker/taker + <strong>spread</strong> (o custo escondido) + taxa de saque</td></tr>
+<tr><td>Liquidez</td><td>Profundidade do livro em BRL; slippage em ordens maiores</td></tr>
+<tr><td>Operação</td><td>Pix, redes suportadas para saque, 2FA, whitelist de endereços</td></tr>
+<tr><td>Tributação</td><td>Exchange <strong>nacional</strong> permite a isenção de R$35 mil/mês em vendas; estrangeira segue a Lei 14.754 (sem isenção)</td></tr></table></div>
+<div class="key">Recomendação prática: uma exchange nacional bem regulada como principal (BRL ↔ cripto e eficiência tributária) e, se necessário, uma global para ativos não listados aqui — com saldo mínimo.</div>`,
+p:`<ol><li>Selecione 3 exchanges e monte uma matriz no Excel com os critérios acima (peso 1–5).</li><li>Simule a compra de R$10 mil em BTC em cada uma: compare o preço efetivo (com spread e taxas) contra a cotação de referência.</li></ol>`,
+q:[{q:"Qual custo costuma ser o mais subestimado?",o:["Taxa de saque","Spread em compra “simplificada”","IOF","Taxa de custódia"],a:1,e:"Botões de compra rápida embutem spread que pode superar a taxa explícita."},
+{q:"A isenção de R$35 mil/mês em vendas se aplica a:",o:["Qualquer exchange","Operações em exchange nacional","Apenas ETFs","Apenas stablecoins"],a:1,e:"Operações no exterior seguem a Lei 14.754/2023, sem essa isenção."}],
+s:["Banco Central — consulta de instituições autorizadas","Lei 14.754/2023"]},
+
+{t:"Sua primeira operação, passo a passo", min:10, b:`
+<ol><li><strong>Cadastro e KYC</strong>: documento, selfie, comprovante. Ative 2FA por aplicativo (não SMS).</li>
+<li><strong>Depósito via Pix</strong> de valor pequeno — o objetivo é aprender o fluxo, não acertar o preço.</li>
+<li><strong>Use o modo avançado</strong> (livro de ofertas), não o botão de “compra fácil”.</li>
+<li><strong>Ordem limitada vs. a mercado</strong>: limitada define o preço e paga taxa de maker (menor); a mercado executa já e paga taxa de taker + slippage.</li>
+<li><strong>Registre a operação</strong> na sua planilha de custo médio: data, ativo, quantidade, preço, taxas, plataforma.</li>
+<li><strong>Saque de teste</strong> para sua carteira (próxima lição) — confirme rede e endereço.</li></ol>
+<h3>Planilha de custo médio (Excel)</h3>
+<pre><code>Colunas: Data | Ativo | Tipo | Qtde | Preço | Taxa | Plataforma
+Custo total compra:   =Qtde*Preço+Taxa
+Qtde em carteira:     =SOMASES(Qtde;Ativo;"BTC";Tipo;"Compra")-SOMASES(Qtde;Ativo;"BTC";Tipo;"Venda")
+Custo médio:          =SOMASES(CustoTotal;Ativo;"BTC";Tipo;"Compra")/SOMASES(Qtde;Ativo;"BTC";Tipo;"Compra")
+Vendas no mês (BRL):  =SOMASES(Valor;Tipo;"Venda";Data;"&gt;="&amp;INÍCIO;Data;"&lt;="&amp;FIM)</code></pre>
+<p>A Receita aceita custo médio ponderado — mantenha o controle desde o primeiro dia; reconstruir histórico depois é caro.</p>`,
+p:`<ol><li>Execute uma compra de valor simbólico com ordem limitada.</li><li>Lance na planilha e confira o custo efetivo vs. o preço de tela.</li></ol>`,
+q:[{q:"Qual tipo de ordem normalmente paga taxa menor?",o:["A mercado (taker)","Limitada que fica no livro (maker)","Stop loss","Todas iguais"],a:1,e:"Quem adiciona liquidez ao livro (maker) paga menos."}],
+s:["Guia de custo médio — Perguntas e Respostas IRPF (Receita Federal)"]},
+
+{t:"Carteiras e autocustódia", min:12, b:`
+<h3>Tipos</h3>
+<ul><li><strong>Hot wallet</strong> (app/extensão: MetaMask, Rabby, Phantom): conveniente, exposta a malware e phishing.</li><li><strong>Hardware wallet</strong> (Ledger, Trezor, Coldcard): a chave nunca sai do dispositivo; você confirma cada transação no aparelho.</li></ul>
+<h3>Setup seguro de hardware wallet</h3>
+<ol><li>Compre <strong>direto do fabricante</strong> — nunca usada ou de marketplace.</li>
+<li>Gere a seed no próprio aparelho. Anote em papel e depois grave em placa de metal. <strong>Nunca</strong> fotografe, digite ou guarde em nuvem.</li>
+<li>Considere uma <em>passphrase</em> (25ª palavra) para patrimônio relevante — e entenda que sem ela os fundos são irrecuperáveis.</li>
+<li>Faça um <strong>teste de restauração</strong> antes de depositar valores relevantes.</li>
+<li>Envie primeiro um valor de teste; confira no explorador; só então envie o restante.</li></ol>
+<div class="key">Erro de rede = perda. Enviar USDT pela rede errada, ou para um endereço de outra blockchain, pode tornar os fundos irrecuperáveis. Confira rede de origem e de destino em toda transferência.</div>`,
+p:`<ol><li>Faça um saque de teste da exchange para sua carteira, na rede correta, e localize a transação no explorador.</li><li>Documente seu procedimento de custódia em uma página (onde está a seed, quem sabe, como restaurar).</li></ol>`,
+q:[{q:"Onde a seed phrase NÃO deve ficar?",o:["Em placa de metal num local seguro","Em foto no celular ou na nuvem","Em papel num cofre","Dividida em multisig"],a:1,e:"Qualquer cópia digital é exposta a vazamento e malware."},
+{q:"Por que enviar um valor de teste primeiro?",o:["Para pagar menos imposto","Para validar endereço e rede antes do valor principal","Porque é obrigatório","Para ganhar recompensa"],a:1,e:"Transações on-chain são irreversíveis."}],
+s:["Documentação oficial Ledger/Trezor","Antonopoulos — Mastering Bitcoin, cap. carteiras"]},
+
+{t:"On-chain: DEX, bridges e exploradores", min:10, b:`
+<p>Operar on-chain dá acesso a ativos que não estão em exchanges — e expõe você a riscos novos.</p>
+<ul><li><strong>Swap em DEX</strong>: defina <em>slippage</em> (tolerância de preço) baixa; slippage alta convida a ataques de MEV (sandwich).</li>
+<li><strong>Aprovações (approvals)</strong>: ao usar um protocolo você autoriza o contrato a mover seus tokens. Revogue aprovações antigas periodicamente (revoke.cash).</li>
+<li><strong>Bridges</strong>: transferem ativos entre redes e estão entre os alvos de hacks mais caros da história. Prefira bridges nativas e valores pequenos.</li>
+<li><strong>Exploradores</strong> (Etherscan, Solscan, mempool.space): sua fonte de verdade — confira contrato do token, holders e transações.</li></ul>
+<div class="key">Regra: sempre verifique o endereço do contrato do token no site oficial do projeto ou no CoinGecko. Tokens falsos com o mesmo nome são comuns.</div>`,
+p:`<ol><li>Com valor simbólico, faça um swap numa DEX de uma L2 (taxas baixas).</li><li>Revise e revogue suas aprovações em revoke.cash.</li><li>No explorador, analise a distribuição de holders de um token: qual % está nas 10 maiores carteiras?</li></ol>`,
+q:[{q:"O que é uma “aprovação” de token?",o:["Um KYC","Autorização para um contrato movimentar seus tokens","Uma ordem limitada","Um airdrop"],a:1,e:"Aprovações ilimitadas esquecidas são vetor clássico de roubo."}],
+s:["revoke.cash","Etherscan/Solscan","rekt.news — histórico de hacks"]},
+
+{t:"Segurança e golpes", min:9, b:`
+<h3>Os vetores mais comuns</h3>
+<div class="tbl"><table><tr><th>Golpe</th><th>Como funciona</th><th>Defesa</th></tr>
+<tr><td>Phishing / falso suporte</td><td>Site ou “atendente” pede seed ou conexão da carteira</td><td>Ninguém legítimo pede seed. Nunca.</td></tr>
+<tr><td>Address poisoning</td><td>Envio de valor ínfimo de endereço parecido para você copiar errado</td><td>Use agenda de endereços; confira início e fim</td></tr>
+<tr><td>Drainers</td><td>Assinatura maliciosa esvazia a carteira</td><td>Carteira separada para testes; leia o que assina</td></tr>
+<tr><td>Pig butchering</td><td>Relacionamento online leva a “plataforma” falsa</td><td>Desconfie de retorno consistente e saque travado</td></tr>
+<tr><td>Pirâmides</td><td>Retorno fixo mensal “com cripto”</td><td>Retorno garantido = sinal de fraude</td></tr></table></div>
+<p>O Brasil teve casos emblemáticos de pirâmides com fachada cripto (GAS Consultoria, Braiscompany). O padrão se repete: rendimento fixo alto, indicação premiada, opacidade sobre a estratégia.</p>
+<div class="key">Arquitetura recomendada: (1) hardware wallet para longo prazo, (2) hot wallet separada e com pouco saldo para interagir com protocolos, (3) e-mail exclusivo + 2FA por app para exchanges.</div>`,
+p:`<ol><li>Crie um e-mail exclusivo para cripto e migre o 2FA para aplicativo autenticador.</li><li>Ative whitelist de endereços de saque na exchange.</li></ol>`,
+q:[{q:"Um “suporte” pede sua seed para resolver um problema. Você:",o:["Envia, se for o site oficial","Nunca envia — é golpe","Envia metade das palavras","Envia por e-mail"],a:1,e:"Nenhuma empresa legítima precisa da sua seed."}],
+s:["rekt.news","Chainalysis — Crypto Crime Report (anual)"]}
+]},
+
+{t:"Valuation de criptoativos", d:"Tokenomics, métricas de protocolo, on-chain e modelos.", L:[
+{t:"O problema do valuation", min:10, b:`
+<p>Tokens raramente dão direito contratual a fluxo de caixa. O valor vem de três fontes possíveis — e o primeiro passo é identificar qual se aplica:</p>
+<div class="tbl"><table><tr><th>Lente</th><th>Pergunta-chave</th><th>Ferramentas</th><th>Ativos típicos</th></tr>
+<tr><td>Monetária</td><td>Que fatia da demanda por reserva de valor ele captura?</td><td>TAM (ouro, M2), adoção, on-chain</td><td>BTC</td></tr>
+<tr><td>Rede</td><td>Quanto vale a rede pelo uso e número de usuários?</td><td>Metcalfe, endereços ativos, NVT</td><td>L1s</td></tr>
+<tr><td>Fluxo</td><td>Que receita o protocolo gera e quanto chega ao holder?</td><td>P/F, P/S, P/E, DCF com alta taxa de desconto</td><td>DeFi, apps</td></tr></table></div>
+<p>Exercício de TAM para BTC: se capturasse X% do valor de mercado do ouro, qual seria o preço implícito? Isso é <strong>análise de cenário</strong>, não preço-alvo — o valor está em explicitar premissas e compará-las com o preço atual (o que está precificado?).</p>
+<div class="key">Mentalidade “reverse DCF”: em vez de perguntar “quanto vale?”, pergunte “que adoção/receita o preço atual exige?” e julgue se é plausível. É a abordagem mais robusta em cripto.</div>`,
+p:`<ol><li>No Excel: market cap do ouro × % de captura (5%, 10%, 25%) ÷ oferta de BTC = preço implícito. Compare com o preço atual e escreva qual premissa o mercado embute.</li></ol>`,
+q:[{q:"Qual pergunta resume a abordagem “reverse DCF” em cripto?",o:["Qual o preço-alvo?","Que adoção ou receita o preço atual exige?","Qual o próximo halving?","Qual exchange lista o token?"],a:1,e:"Inverter o problema expõe as premissas embutidas no preço."}],
+s:["Burniske, C. & Tatar, J. — Cryptoassets (2017), parte de valuation","Messari — Crypto Theses"]},
+
+{t:"Tokenomics", min:14, b:`
+<p>Tokenomics é a estrutura de capital do token. É onde mais se perde dinheiro — principalmente por diluição.</p>
+<h3>Os números essenciais</h3>
+<ul><li><strong>Oferta circulante</strong> vs. <strong>total</strong> vs. <strong>máxima</strong>.</li>
+<li><strong>Market cap</strong> = preço × circulante. <strong>FDV</strong> = preço × oferta total — o valor “totalmente diluído”.</li>
+<li><strong>Float</strong> = circulante ÷ total. Float baixo + FDV alto = muita oferta futura chegando (o problema “low float, high FDV” de 2024).</li>
+<li><strong>Cronograma de unlocks</strong>: cliffs de time e investidores costumam gerar pressão vendedora.</li>
+<li><strong>Distribuição</strong>: % com time + investidores vs. comunidade.</li></ul>
+<h3>Captura de valor (value accrual)</h3>
+<p>O token se beneficia do sucesso do protocolo? Mecanismos: queima/recompra com receita (Hyperliquid destina a maior parte das taxas a recompras), distribuição de taxas a stakers, uso obrigatório como colateral ou gas. Token apenas de “governança” sem fluxo tende a capturar pouco.</p>
+<h3>No Excel</h3>
+<pre><code>Market cap:            =Preço*Circulante
+FDV:                   =Preço*Total
+Float:                 =Circulante/Total
+Overhang (R$):         =FDV-MarketCap
+Diluição 12m:          =SOMA(Unlocks_próx_12m)/Circulante
+Real yield:            =Yield_staking-Inflação_oferta
+Pressão vs. liquidez:  =(Unlock_mês*Preço)/Volume_diário_médio   ' dias de volume</code></pre>
+<div class="key">Teste de sanidade: um token com 15% de float e 40% de diluição prevista em 12 meses precisa de crescimento de demanda de ~40% só para o preço ficar parado.</div>`,
+p:`<ol><li>Use a calculadora de tokenomics (aba Ferramentas) com um token real, usando dados de CoinGecko e tokenomist.ai.</li><li>Monte o cronograma de unlocks dos próximos 24 meses e marque os meses críticos.</li></ol>`,
+q:[{q:"Um token tem preço US$1, circulante 200M e total 1B. O FDV é:",o:["US$200M","US$1B","US$800M","US$1,2B"],a:1,e:"FDV = preço × oferta total = 1 × 1B."},
+{q:"Real yield de staking é:",o:["Yield nominal","Yield − inflação da oferta","Yield + queima","Volume ÷ market cap"],a:1,e:"Desconta a diluição que o próprio staking compensa."}],
+s:["tokenomist.ai (antigo Token Unlocks) — cronogramas","CoinGecko — oferta circulante/total","Messari — perfis de tokenomics"]},
+
+{t:"Métricas fundamentalistas de protocolo", min:11, b:`
+<p>Para protocolos que geram taxas, dá para aplicar a caixa de ferramentas de equity — com ajustes.</p>
+<div class="tbl"><table><tr><th>Métrica</th><th>Fórmula</th><th>Leitura</th></tr>
+<tr><td>P/F</td><td>FDV ÷ Fees anualizadas</td><td>Quanto se paga por toda a atividade econômica</td></tr>
+<tr><td>P/S</td><td>FDV ÷ Revenue anualizada</td><td>Quanto se paga pelo que o protocolo retém</td></tr>
+<tr><td>P/E</td><td>FDV ÷ Earnings</td><td>Desconta incentivos em token — mais rigoroso</td></tr>
+<tr><td>Holder yield</td><td>(Recompras + distribuições) ÷ Market cap</td><td>O que efetivamente chega ao detentor</td></tr>
+<tr><td>Eficiência de incentivo</td><td>Receita ÷ Incentivos pagos</td><td>Crescimento comprado ou orgânico?</td></tr></table></div>
+<ul><li>Use <strong>FDV</strong> no numerador para comparar projetos com floats diferentes.</li><li>Anualize com cuidado: um mês de pico distorce. Prefira 90 dias anualizados + tendência.</li><li>Compare com pares da mesma categoria (DEX vs. DEX), e com empresas análogas (ex.: corretoras listadas) para calibrar.</li></ul>
+<div class="key">Ajuste de risco: aplique um desconto robusto por risco regulatório, de contrato e de governança. Múltiplos “baratos” em DeFi frequentemente refletem risco real, não oportunidade.</div>`,
+p:`<ol><li>Monte uma tabela de comparáveis com 5 protocolos do mesmo setor (Token Terminal/DefiLlama): FDV, fees, revenue, P/F, P/S, crescimento 90d.</li><li>Identifique o mais barato e escreva 3 razões pelas quais o desconto pode ser justificado.</li></ol>`,
+q:[{q:"Por que usar FDV em vez de market cap nos múltiplos?",o:["É sempre menor","Torna comparáveis projetos com floats diferentes","É exigido pela CVM","Inclui a receita"],a:1,e:"Neutraliza diferenças de float e explicita a diluição futura."}],
+s:["Token Terminal","DefiLlama — fees & revenue","Artemis — métricas de protocolos"]},
+
+{t:"Métricas on-chain para BTC e ETH", min:12, b:`
+<p>A blockchain é pública — dá para medir comportamento de investidores com precisão que não existe em outros mercados.</p>
+<div class="tbl"><table><tr><th>Métrica</th><th>O que é</th><th>Uso histórico</th></tr>
+<tr><td>Realized cap</td><td>Soma de cada moeda ao preço da última movimentação ≈ “custo base agregado”</td><td>Âncora de valor; cresce com capital novo</td></tr>
+<tr><td>MVRV</td><td>Market cap ÷ Realized cap (Mahmudov & Puell, 2018)</td><td>Acima de ~3–3,5 coincidiu com topos; abaixo de 1, com fundos</td></tr>
+<tr><td>NVT</td><td>Market cap ÷ volume on-chain (Willy Woo)</td><td>“P/E” da rede — alto indica preço à frente do uso</td></tr>
+<tr><td>SOPR</td><td>Lucro/prejuízo das moedas gastas</td><td>Capitulação quando &lt;1 de forma persistente</td></tr>
+<tr><td>Holders de longo prazo</td><td>Oferta parada há 155+ dias</td><td>Distribuição de LTHs costuma marcar fases tardias de alta</td></tr>
+<tr><td>Hash rate / Puell</td><td>Segurança e receita dos mineradores</td><td>Estresse de mineradores sinaliza fundos</td></tr></table></div>
+<div class="key">Uso correto: identificar <strong>regime de ciclo</strong> (barato/caro em relação ao custo base dos investidores) para calibrar ritmo de compra e realização. Não use como gatilho isolado de trade — os patamares históricos mudam à medida que o ativo amadurece.</div>`,
+p:`<ol><li>Em fontes gratuitas (Glassnode Studio, CryptoQuant, bitcoinmagazinepro.com), plote o MVRV dos últimos 10 anos e marque os topos de 2013, 2017, 2021.</li><li>Anote o MVRV atual e classifique o regime: frio, neutro ou quente.</li></ol>`,
+q:[{q:"MVRV abaixo de 1 indica que:",o:["O mercado está eufórico","Preço abaixo do custo base agregado — historicamente zona de fundo","A rede parou","O halving ocorreu"],a:1,e:"O investidor médio está no prejuízo, o que historicamente coincidiu com fundos."}],
+s:["Mahmudov, M. & Puell, D. (2018) — MVRV","Glassnode Academy","CryptoQuant — guias de métricas"]},
+
+{t:"Modelos e suas limitações", min:10, b:`
+<div class="tbl"><table><tr><th>Modelo</th><th>Ideia</th><th>Limitação</th></tr>
+<tr><td>Equação de troca (MV = PQ)</td><td>Burniske: valor da “moeda” do protocolo = PQ ÷ V, descontado a valor presente</td><td>Velocidade (V) é inobservável e muito sensível</td></tr>
+<tr><td>Metcalfe</td><td>Valor ∝ usuários²</td><td>Usuários ≠ endereços; ajuste estatístico frágil</td></tr>
+<tr><td>Stock-to-Flow</td><td>Preço explicado pela escassez (PlanB, 2019)</td><td>Ignora demanda; previsões falharam em 2021–22</td></tr>
+<tr><td>DCF de protocolo</td><td>Fluxos ao holder (recompras, distribuições)</td><td>Taxa de desconto de venture e terminal incerto</td></tr>
+<tr><td>Cenários probabilísticos</td><td>Bear/base/bull com pesos explícitos</td><td>Só tão bom quanto as premissas — mas as torna auditáveis</td></tr></table></div>
+<p>Evidência acadêmica relevante: Liu & Tsyvinski (Review of Financial Studies, 2021) mostram que retornos de cripto são pouco explicados por fatores de ações e muito explicados por <strong>momentum</strong> e <strong>atenção dos investidores</strong> — o que reforça disciplina de processo sobre convicção de modelo.</p>
+<div class="key">Recomendação: use cenários com probabilidade e um valor esperado; teste sensibilidade à premissa que mais pesa (adoção, take rate, diluição). Se o resultado só fecha no bull case, a posição é especulativa — dimensione como tal.</div>`,
+p:`<ol><li>Para um ativo da sua escolha, monte 3 cenários (bear/base/bull) com premissas, preço implícito e probabilidade. Calcule o valor esperado e o retorno esperado vs. preço atual.</li></ol>`,
+q:[{q:"Por que o Stock-to-Flow perdeu credibilidade?",o:["Porque usava DCF","Porque ignora a demanda e suas previsões falharam","Porque é ilegal","Porque só vale para ETH"],a:1,e:"Escassez sem demanda não determina preço."}],
+s:["Liu, Y. & Tsyvinski, A. (2021). Risks and Returns of Cryptocurrency. RFS","Burniske — Cryptoasset Valuations (2017, Medium)","Peterson, T. (2018) — Metcalfe's Law as a Model for Bitcoin's Value"]}
+]},
+
+{t:"ICOs e token sales", d:"Histórico, due diligence, red flags e pós-lançamento.", L:[
+{t:"De 2017 ao novo ciclo de token sales", min:9, b:`
+<p>O boom de ICOs de 2017 levantou bilhões com pouco mais que um whitepaper. A maioria dos projetos fracassou ou era fraude; a SEC passou a enquadrar muitos tokens como valores mobiliários (teste de Howey) e o mercado migrou para rodadas privadas com VCs, IEOs em exchanges e airdrops.</p>
+<p>A partir de 2025, as vendas públicas voltaram em outro formato: plataformas com KYC, alocação por reputação e mecanismos de proteção ao investidor. Entre os nomes centrais estão Legion, Buidlpad, Sonar (da Echo) e Kaito; a Coinbase comprou a Echo por US$375 milhões e lançou suas próprias vendas de tokens, e a Kraken fez parceria com a Legion para ofertas compatíveis com o MiCA europeu.</p>
+<div class="tbl"><table><tr><th>Formato</th><th>Acesso</th><th>Ponto de atenção</th></tr>
+<tr><td>Venda pública curada (Legion, Coinbase)</td><td>KYC; alocação por pontuação/reputação</td><td>Alocações pequenas; restrições por jurisdição</td></tr>
+<tr><td>Ferramenta self-hosted (Sonar)</td><td>Regras definidas pelo projeto</td><td>Qualidade varia muito — diligência é sua</td></tr>
+<tr><td>Futarquia/treasury (MetaDAO)</td><td>Tesouraria controlada por mercado</td><td>Mecanismo novo, pouco histórico</td></tr>
+<tr><td>Launchpads permissionless</td><td>Qualquer um lança</td><td>Risco de rug altíssimo</td></tr></table></div>
+<div class="key">Sobresubscrição não é tese. Vendas com dezenas de vezes de demanda frequentemente devolveram ganhos quando o FDV de lançamento era alto e o uso real não acompanhou.</div>`,
+p:`<ol><li>Escolha 3 token sales dos últimos 12 meses e compare: FDV da venda, FDV no listing, preço hoje, % de float no TGE.</li></ol>`,
+q:[{q:"Por que o mercado migrou de ICOs públicos para rodadas privadas após 2018?",o:["Por falta de tecnologia","Fraudes e enquadramento regulatório (valores mobiliários)","Porque o BTC subiu","Por causa do halving"],a:1,e:"A SEC e outros reguladores passaram a tratar muitos tokens como valores mobiliários."}],
+s:["Tiger Research — The Return of ICOs","Sablier — The State of Token Sale Platforms in 2025","The Block — cobertura de token sales"]},
+
+{t:"Due diligence de uma token sale", min:14, b:`
+<p>Trate como um investimento de venture capital com liquidez antecipada. Framework de 9 dimensões (use o scorecard na aba Ferramentas):</p>
+<ol><li><strong>Problema e produto</strong>: existe produto funcionando? Quem paga por ele?</li>
+<li><strong>Time</strong>: identificado, histórico verificável, entregas anteriores.</li>
+<li><strong>Investidores e termos</strong>: quem entrou antes, a que preço/FDV, com que vesting.</li>
+<li><strong>Valuation de entrada</strong>: FDV da venda vs. comparáveis já listados (P/F, P/S, usuários).</li>
+<li><strong>Tokenomics</strong>: float no TGE, cronograma de unlocks, % comunidade vs. insiders.</li>
+<li><strong>Captura de valor</strong>: o token recebe fluxo (recompra, fees) ou é só governança?</li>
+<li><strong>Tração real</strong>: usuários e receita orgânicos vs. “farmados” por incentivo/airdrop.</li>
+<li><strong>Segurança</strong>: auditorias por firmas reconhecidas, bug bounty, histórico de incidentes.</li>
+<li><strong>Jurídico e acesso</strong>: entidade, jurisdição, restrições a residentes no Brasil, KYC.</li></ol>
+<h3>Perguntas que destravam a análise</h3>
+<ul><li>Se o token não existisse, o produto funcionaria igual? (Se sim, a captura de valor é duvidosa.)</li><li>Quem vende no TGE e quanto? (Airdrop + liquidez + market maker.)</li><li>Qual FDV justifica a receita atual com um P/S razoável do setor?</li></ul>`,
+p:`<ol><li>Aplique o scorecard a uma venda ativa ou recente e salve o resultado.</li><li>Escreva um memo de 1 página: tese, valuation de entrada vs. comparáveis, 3 riscos, decisão e tamanho.</li></ol>`,
+q:[{q:"Pergunta-chave sobre captura de valor:",o:["O token tem logo bonito?","Se o token não existisse, o produto funcionaria igual?","Quantos seguidores no X?","Está listado na Binance?"],a:1,e:"Se o produto independe do token, o holder pode não capturar o sucesso."},
+{q:"Tração “farmada” significa:",o:["Uso orgânico","Uso inflado por incentivos e expectativa de airdrop","Receita recorrente","Uso institucional"],a:1,e:"Quando os incentivos acabam, a atividade costuma cair."}],
+s:["Legion, Coinbase Token Sales — documentação de vendas","DefiLlama — raises (rodadas e valuations)","CryptoRank — histórico de vendas e ROI"]},
+
+{t:"Red flags e mecânica pós-lançamento", min:10, b:`
+<h3>Red flags com poder de veto</h3>
+<ul><li>Promessa de retorno ou “preço mínimo garantido”.</li><li>Time anônimo <em>e</em> sem vesting.</li><li>Contrato sem auditoria, com funções de mint ou pausa controladas por uma chave única.</li><li>Insiders com mais de ~50% da oferta e unlocks relevantes em menos de 12 meses.</li><li>Pressão por urgência (“últimas horas”), indicação remunerada.</li><li>Liquidez concentrada e removível pelo time (risco de rug).</li></ul>
+<h3>Dinâmica típica pós-TGE</h3>
+<p>Muitos tokens lançados com FDV elevado caem nos meses seguintes, à medida que airdrops são vendidos e unlocks entram. Implicações práticas:</p>
+<ul><li><strong>Tamanho</strong>: cada token sale como opção — até 0,5–1% da carteira cripto.</li><li><strong>Plano de saída antes de entrar</strong>: ex.: recuperar o custo no TGE se o múltiplo for alto e manter o restante pela tese.</li><li><strong>Calendário</strong>: marque cliffs na agenda; reavalie antes de cada unlock.</li></ul>`,
+p:`<ol><li>Para um token lançado nos últimos 6 meses, plote preço vs. datas de unlock e descreva o padrão.</li></ol>`,
+q:[{q:"Qual destes é red flag com poder de veto?",o:["Auditoria por duas firmas","Time anônimo e sem vesting","Float de 30% no TGE","Produto em beta"],a:1,e:"Sem identidade nem vesting, nada impede a venda imediata dos insiders."}],
+s:["tokenomist.ai — unlocks","De.Fi / Token Sniffer — checagem de contratos"]}
+]},
+
+{t:"Portfólio e gestão de risco", d:"Alocação, entrada, rebalanceamento, ciclos e tese.", L:[
+{t:"Quanto alocar", min:10, b:`
+<p>Comece pela <strong>perda tolerável</strong>, não pelo retorno desejado. O BTC já caiu mais de 75% em quatro ciclos (2011, 2014–15, 2018, 2022); altcoins caem 90%+ com frequência.</p>
+<div class="key"><strong>Regra de dimensionamento:</strong> alocação máxima = perda que você aceita sem mudar de vida ÷ drawdown de cenário. Ex.: aceita perder R$80 mil num cenário de −80% → alocação máxima de R$100 mil.</div>
+<h3>Estrutura core-satellite</h3>
+<div class="tbl"><table><tr><th>Camada</th><th>Ativos</th><th>% da carteira cripto (referência)</th></tr>
+<tr><td>Core</td><td>BTC (e ETH)</td><td>60–80%</td></tr>
+<tr><td>Satélites</td><td>L1s/DeFi com tese documentada</td><td>15–30%</td></tr>
+<tr><td>Opções</td><td>Token sales, small caps</td><td>até 5–10%</td></tr>
+<tr><td>Liquidez</td><td>Stablecoin/BRL para oportunidades</td><td>tático</td></tr></table></div>
+<p>A faixa de 1–5% do patrimônio financeiro é a referência mais citada em estudos de gestoras para carteiras diversificadas, por conta da contribuição desproporcional ao risco total. Faixas acima disso pedem convicção documentada e horizonte longo.</p>`,
+p:`<ol><li>Use a calculadora de dimensionamento (Ferramentas) e defina seu teto de alocação.</li><li>Escreva sua política de investimento cripto em meia página: teto, faixas por camada, critérios de entrada e saída.</li></ol>`,
+q:[{q:"Por onde começar o dimensionamento?",o:["Retorno desejado","Perda tolerável num cenário de forte queda","Recomendação de influenciador","Preço atual"],a:1,e:"A perda tolerável define a alocação sustentável."}],
+s:["Fidelity Digital Assets / BlackRock — estudos de alocação em BTC","Swedroe & Grogan — Your Complete Guide to a Successful and Secure Retirement (alocação)"]},
+
+{t:"Estratégias de entrada", min:9, b:`
+<ul><li><strong>Aporte único</strong>: em ativos com retorno esperado positivo, estatisticamente vence o parcelamento na maioria dos períodos (estudo da Vanguard sobre ações, 2012) — mas exige estômago.</li>
+<li><strong>DCA (aportes periódicos)</strong>: reduz risco de timing e arrependimento. Em ativos de volatilidade de 50%+ ao ano, o benefício comportamental costuma superar o custo esperado.</li>
+<li><strong>DCA com régua de valuation</strong>: aporte base mensal, acelerado quando métricas de ciclo estão frias (ex.: MVRV baixo) e reduzido quando quentes.</li></ul>
+<div class="key">Recomendação prática: DCA mensal automatizado no core + reserva tática (10–20% do orçamento cripto) para quedas de 30%+ a partir do topo recente. Decida as regras agora, com a cabeça fria.</div>`,
+p:`<ol><li>Defina valor mensal, dia de aporte e regra de aceleração/redução. Configure a recorrência na exchange.</li></ol>`,
+q:[{q:"Principal benefício do DCA em cripto:",o:["Maximiza retorno esperado sempre","Reduz risco de timing e de decisão emocional","Elimina impostos","Garante preço médio mínimo"],a:1,e:"É sobretudo uma ferramenta comportamental e de controle de risco."}],
+s:["Vanguard (2012) — Dollar-cost averaging just means taking risk later"]},
+
+{t:"Rebalanceamento e realização de lucros", min:10, b:`
+<p>Sem regra de saída, você vai devolver os ganhos no próximo bear market. Três mecanismos:</p>
+<ol><li><strong>Bandas de alocação</strong>: se cripto passar de, digamos, 1,5× o peso-alvo no patrimônio, venda de volta ao alvo.</li><li><strong>Realização escalonada</strong>: vender frações em patamares pré-definidos (múltiplos do custo ou métricas de ciclo quentes).</li><li><strong>Revisão de tese</strong>: se a tese quebrou, saia — independentemente do preço de compra.</li></ol>
+<h3>Eficiência tributária (impacto direto no caixa)</h3>
+<p>Na exchange nacional, vendas de até R$35 mil no mês são isentas — a isenção é <strong>tudo ou nada</strong> e soma todas as exchanges nacionais do CPF. Planejar realizações abaixo desse teto, mês a mês, pode zerar o IR de quem rebalanceia aos poucos.</p>
+<div class="key">Exemplo: realizar R$140 mil em 4 meses (R$35 mil/mês) vs. em 1 mês. Com ganho de 60% sobre o custo, a segunda opção gera ~R$7,9 mil de IR (15% × R$52,5 mil); a primeira, zero.</div>`,
+p:`<ol><li>Defina suas bandas e patamares de realização e registre na política de investimento.</li><li>Simule na calculadora tributária uma venda de R$34 mil e outra de R$36 mil com o mesmo ganho percentual.</li></ol>`,
+q:[{q:"Você vendeu R$20 mil na exchange A e R$16 mil na exchange B (ambas nacionais) no mesmo mês. A isenção:",o:["Vale para ambas","Não se aplica: o total do mês (R$36 mil) passou do limite","Vale só para a A","Vale para o ganho até R$35 mil"],a:1,e:"O limite é sobre o total vendido no mês por CPF, somando plataformas."}],
+s:["Receita Federal — Perguntas e Respostas IRPF (criptoativos)"]},
+
+{t:"Ciclos, macro e derivativos", min:11, b:`
+<h3>O que move o mercado</h3>
+<div class="tbl"><table><tr><th>Vetor</th><th>Indicadores</th><th>Leitura</th></tr>
+<tr><td>Liquidez global</td><td>M2 global, balanço de BCs, dólar (DXY)</td><td>Expansão de liquidez historicamente favorece cripto</td></tr>
+<tr><td>Juros reais</td><td>Treasuries 10 anos real</td><td>Custo de oportunidade de ativo sem fluxo</td></tr>
+<tr><td>Fluxo institucional</td><td>ETFs, tesourarias corporativas</td><td>Demanda marginal</td></tr>
+<tr><td>Alavancagem</td><td>Funding rate, open interest, liquidações</td><td>Funding alto + OI recorde = mercado frágil</td></tr>
+<tr><td>Sentimento</td><td>Fear & Greed, buscas, apps no topo das lojas</td><td>Contrarian em extremos</td></tr>
+<tr><td>Ciclo de oferta</td><td>Halving</td><td>Narrativa de 4 anos — cada vez menos dominante com a institucionalização</td></tr></table></div>
+<div class="key">Alavancagem é o principal destruidor de patrimônio em cripto. Com volatilidade diária de 5–10% em dias de estresse, 5× de alavancagem significa liquidação em um único movimento. Para investidor de longo prazo: zero alavancagem.</div>`,
+p:`<ol><li>Monte um painel semanal (Excel/Power BI) com: preço BTC, MVRV, funding médio, fluxo de ETFs, DXY, juro real 10 anos. Revise toda segunda-feira por 8 semanas.</li></ol>`,
+q:[{q:"Funding rate muito positivo e open interest recorde sugerem:",o:["Mercado desalavancado","Excesso de posições compradas alavancadas — risco de liquidações em cascata","Fim do ciclo de halving","Baixa volatilidade"],a:1,e:"Mercado lotado de alavancagem tende a sofrer cascatas de liquidação."}],
+s:["Coinglass — funding, OI e liquidações","Alden, L. — artigos sobre liquidez e BTC (lynalden.com)"]},
+
+{t:"Tese, diário e governança pessoal", min:8, b:`
+<p>Aplique ao seu portfólio o mesmo rigor que você aplicaria a um comitê de investimentos.</p>
+<ul><li><strong>Memo por ativo</strong> (1 página): tese, lente de valuation, premissas-chave, cenários, gatilhos de saída, tamanho.</li><li><strong>Pre-mortem</strong>: “daqui a 2 anos este investimento perdeu 90%. Por quê?” — escreva 3 causas.</li><li><strong>Diário de decisões</strong>: data, decisão, racional, estado emocional. Reveja a cada trimestre para separar sorte de processo.</li><li><strong>Revisão trimestral</strong>: alocação vs. política, teses válidas, unlocks e eventos à frente.</li></ul>
+<div class="key">KPI do investidor: aderência à política, não retorno do trimestre. Retorno de curto prazo em cripto é dominado por ruído.</div>`,
+p:`<ol><li>Escreva o memo do seu primeiro ativo satélite usando o template do Módulo 8.</li></ol>`,
+q:[{q:"Para que serve o pre-mortem?",o:["Calcular imposto","Antecipar causas de fracasso e definir gatilhos de saída","Escolher exchange","Prever o preço"],a:1,e:"Força a explicitar riscos antes do viés de confirmação se instalar."}],
+s:["Klein, G. — Performing a Project Premortem (HBR, 2007)","Duke, A. — Thinking in Bets"]}
+]},
+
+{t:"Brasil: regulação e tributação", d:"Marco legal, Banco Central, IR e declaração.", L:[
+{t:"Marco regulatório", min:9, b:`
+<ul><li><strong>Lei 14.478/2022</strong>: marco legal dos ativos virtuais; define prestadoras de serviços (PSAVs) e atribui a regulação ao Banco Central. Cria o tipo penal de fraude com ativos virtuais.</li>
+<li><strong>Resoluções BCB 519, 520 e 521</strong> (publicadas em 10/11/2025, vigentes desde 02/02/2026): autorização e funcionamento das prestadoras, governança, PLD, segregação patrimonial, proteção ao cliente e enquadramento de operações (inclusive com stablecoins) no mercado de câmbio.</li>
+<li><strong>Prazo de transição</strong>: empresas que já operavam tiveram até 30/10/2026 para pedir autorização; quem não protocolou deve encerrar as atividades em até 30 dias.</li>
+<li><strong>CVM</strong>: tokens que se caracterizam como valores mobiliários seguem a regulação da CVM (Parecer de Orientação 40/2022). ETFs e fundos de cripto são regulados pela CVM.</li></ul>
+<div class="key">Implicação prática (nov/2026): verifique se a sua exchange está na lista de instituições com pedido de autorização no BC. Plataforma fora da lista no Brasil é risco operacional e de continuidade.</div>`,
+p:`<ol><li>Consulte no site do Banco Central a situação das exchanges que você usa.</li></ol>`,
+q:[{q:"Quem regula as prestadoras de serviços de ativos virtuais no Brasil?",o:["CVM","Banco Central","Receita Federal","B3"],a:1,e:"A Lei 14.478 atribuiu ao BC; a CVM cuida dos tokens que são valores mobiliários."}],
+s:["Lei 14.478/2022","Resoluções BCB 519, 520 e 521/2025","CVM — Parecer de Orientação 40/2022"]},
+
+{t:"Imposto de renda sobre cripto (PF)", min:12, b:`
+<div class="key">Confusão frequente: a MP 1.303/2025, que criaria alíquota única de 17,5% e acabaria com a isenção, <strong>caducou em 08/10/2025</strong>. Em 2026 continuam valendo as regras anteriores.</div>
+<h3>Exchange nacional (apuração mensal)</h3>
+<ul><li><strong>Isenção</strong>: se o total vendido no mês (todas as plataformas nacionais, por CPF) for de até R$35 mil. É tudo ou nada: R$1 acima e todo o ganho do mês é tributável.</li>
+<li><strong>Alíquotas progressivas sobre o ganho</strong>: 15% até R$5 milhões; 17,5% de R$5 a 10 milhões; 20% de R$10 a 30 milhões; 22,5% acima de R$30 milhões.</li>
+<li><strong>Recolhimento</strong>: DARF (código 4600) até o último dia útil do mês seguinte, apurado no GCAP.</li>
+<li>Permuta cripto–cripto: a Receita entende como alienação — conta para o limite e pode gerar ganho.</li></ul>
+<h3>Exchange no exterior / autocustódia de ativos adquiridos lá fora</h3>
+<p>Lei 14.754/2023: ganhos com aplicações no exterior (inclui ativos virtuais) são tributados a 15% na declaração anual, sem a isenção mensal, com compensação de perdas no ano.</p>
+<p class="note">Regras sujeitas a mudança e a interpretação. Para valores relevantes, valide com seu contador tributarista.</p>`,
+p:`<ol><li>Rode a calculadora tributária (Ferramentas) com um cenário real de rebalanceamento.</li><li>Inclua na sua planilha uma coluna “vendas acumuladas no mês” com alerta ao se aproximar de R$35 mil.</li></ol>`,
+q:[{q:"Em 2026, a alíquota única de 17,5% para cripto:",o:["Está em vigor","Nunca entrou em vigor — a MP caducou","Vale só para stablecoins","Vale acima de R$35 mil"],a:1,e:"A MP 1.303/2025 perdeu a validade em outubro/2025."},
+{q:"Ganho de R$50 mil em vendas de R$200 mil no mês, em exchange nacional. IR devido:",o:["Isento","R$7.500 (15%)","R$8.750 (17,5%)","R$30.000"],a:1,e:"Vendas acima de R$35 mil: 15% sobre o ganho, faixa até R$5 milhões."}],
+s:["Receita Federal — Perguntas e Respostas IRPF","Lei 13.259/2016 (alíquotas progressivas)","Lei 14.754/2023 (aplicações no exterior)"]},
+
+{t:"Declaração e obrigações acessórias", min:8, b:`
+<ul><li><strong>IRPF – Bens e Direitos, grupo 08</strong>: 01 Bitcoin; 02 outras moedas digitais (altcoins); 03 stablecoins; 10 NFTs; 99 outros. Declare pelo <strong>custo de aquisição</strong>, não pelo valor de mercado, informando o CNPJ da custodiante ou que está em autocustódia.</li>
+<li><strong>Obrigação mensal de reporte</strong>: operações sem intermediação de exchange brasileira (exchange estrangeira, P2P, carteira própria) acima do limiar mensal devem ser informadas pelo próprio investidor. Desde julho/2026 vale a nova declaração DeCripto, que substituiu a IN RFB 1.888 — confirme o limiar e o leiaute vigentes no e-CAC.</li>
+<li><strong>Declaração pré-preenchida</strong>: a Receita já recebe dados das exchanges nacionais — inconsistências viram malha.</li></ul>
+<div class="key">Controle mínimo: planilha de custo médio por ativo + extrato mensal das plataformas + registro de transferências entre carteiras próprias (transferência entre suas carteiras não é alienação).</div>`,
+p:`<ol><li>Gere o relatório de IR da sua exchange e concilie com sua planilha. Diferenças precisam ser explicadas antes da declaração.</li></ol>`,
+q:[{q:"Na DIRPF, criptoativos são declarados por:",o:["Valor de mercado em 31/12","Custo de aquisição","Maior cotação do ano","Valor em dólar sem conversão"],a:1,e:"Bens e direitos seguem o custo de aquisição."}],
+s:["Receita Federal — Manual do IRPF (grupo 08)","e-CAC — DeCripto"]}
+]},
+
+{t:"Prática integrada", d:"Projeto final: da tese à carteira, e a rotina que sustenta.", L:[
+{t:"Projeto final: tese completa de um ativo", min:20, b:`
+<p>Escolha um ativo satélite (não BTC) e produza um memo de investimento usando este template:</p>
+<pre><code>1. Tese em 3 linhas (por que este ativo, por que agora)
+2. Categoria e lente de valuation (monetária / rede / fluxo)
+3. Tokenomics: circulante, total, FDV, float, unlocks 24m, value accrual
+4. Fundamentos: fees, revenue, earnings, crescimento 90d, P/F e P/S vs. 3 pares
+5. Cenários bear / base / bull: premissas, preço implícito, probabilidade
+   → valor esperado e retorno esperado vs. preço atual
+6. Riscos (pre-mortem) e gatilhos de saída
+7. Decisão: tamanho (% da carteira cripto), forma de entrada, custódia
+8. Impacto tributário: calendário de realização vs. limite mensal</code></pre>
+<div class="key">Critério de aprovação: alguém que não acompanha cripto deveria entender a decisão e conseguir discordar dela com base em premissas explícitas.</div>`,
+p:`<ol><li>Escreva o memo.</li><li>Peça ao Tutor (aba Tutor) que critique seu memo como um comitê de investimentos cético — cole o texto lá.</li></ol>`,
+q:[{q:"O que torna um memo de investimento auditável?",o:["Preço-alvo único","Premissas e probabilidades explícitas","Opinião de influenciador","Gráfico técnico"],a:1,e:"Premissas explícitas permitem discordar e revisar."}],
+s:["Messari — perfis e research","Token Terminal / DefiLlama — dados de comparáveis"]},
+
+{t:"Montando a carteira e a rotina", min:10, b:`
+<h3>Checklist de implantação</h3>
+<ol><li>Política de investimento cripto escrita (teto, camadas, regras de entrada/saída).</li><li>Exchange nacional principal + hardware wallet configurada e testada.</li><li>DCA automatizado no core.</li><li>Planilha de custo médio e controle do limite mensal.</li><li>Plano de sucessão documentado.</li></ol>
+<h3>Rotina</h3>
+<div class="tbl"><table><tr><th>Frequência</th><th>Atividade</th><th>Tempo</th></tr>
+<tr><td>Semanal</td><td>Painel macro/on-chain; notícias dos ativos da carteira</td><td>30 min</td></tr>
+<tr><td>Mensal</td><td>Aporte, conciliação, IR (DARF se aplicável), unlocks do mês seguinte</td><td>1 h</td></tr>
+<tr><td>Trimestral</td><td>Revisão de teses e alocação; diário de decisões</td><td>2 h</td></tr>
+<tr><td>Anual</td><td>Declaração IRPF; revisão da política e da custódia</td><td>3 h</td></tr></table></div>
+<div class="key">Menos é mais: uma carteira de 3–8 ativos que você entende supera uma de 30 que você acompanha pelo X.</div>`,
+p:`<ol><li>Crie os eventos recorrentes na sua agenda (semanal, mensal, trimestral).</li></ol>`,
+q:[{q:"Qual frequência é adequada para revisar teses?",o:["Diária","Trimestral","A cada notícia","Nunca"],a:1,e:"Revisão trimestral equilibra disciplina e ruído."}],
+s:["Bankless, Unchained (Laura Shin) — podcasts","The Block, CoinDesk — notícias"]}
+]}
+];
+
+const LIB = {
+ "Livros — fundamentos": [
+  ["Mastering Bitcoin","Andreas Antonopoulos","Base técnica: chaves, transações, carteiras. Leia os capítulos 1–5."],
+  ["Cryptoassets: The Innovative Investor's Guide","Chris Burniske & Jack Tatar","O livro de referência sobre valuation e alocação. Ainda o melhor ponto de partida para quem vem de finanças."],
+  ["Digital Gold","Nathaniel Popper","História dos primeiros anos do Bitcoin — contexto e personagens."],
+  ["The Infinite Machine","Camila Russo","A história do Ethereum."],
+  ["Read Write Own","Chris Dixon","Tese de redes e tokens pela ótica de um VC (a16z)."],
+  ["Layered Money","Nik Bhatia","Bitcoin na hierarquia monetária — ótimo para quem pensa em macro."]
+ ],
+ "Livros — o contraponto": [
+  ["Number Go Up","Zeke Faux","Investigação jornalística cética sobre stablecoins, FTX e golpes. Obrigatório para calibrar risco."],
+  ["The Cryptopians","Laura Shin","Os bastidores do boom de 2017 e das ICOs."],
+  ["The Bitcoin Standard","Saifedean Ammous","Tese maximalista. Leia criticamente — é advocacy, não análise neutra."]
+ ],
+ "Papers e pesquisa": [
+  ["Bitcoin: A Peer-to-Peer Electronic Cash System","Satoshi Nakamoto, 2008","O documento original."],
+  ["Ethereum Whitepaper","Vitalik Buterin, 2014","A visão de contratos inteligentes."],
+  ["Risks and Returns of Cryptocurrency","Liu & Tsyvinski — Review of Financial Studies, 2021","Momentum e atenção explicam retornos; fatores de ações não."],
+  ["Trading and Arbitrage in Cryptocurrency Markets","Makarov & Schoar — Journal of Financial Economics, 2020","Ineficiências e prêmios entre mercados."],
+  ["Crypto Theses","Messari (anual)","Panorama do setor; leia a edição mais recente."],
+  ["DeFi and the Future of Finance","Harvey, Ramachandran & Santoro, 2021","DeFi explicado por acadêmicos de finanças."]
+ ],
+ "Ferramentas de dados": [
+  ["DefiLlama","Grátis","TVL, fees, revenue, rodadas de investimento, unlocks."],
+  ["Token Terminal","Freemium","Demonstrativos de protocolos e múltiplos."],
+  ["Glassnode Studio / CryptoQuant","Freemium","Métricas on-chain (MVRV, SOPR, LTH)."],
+  ["CoinGecko","Grátis","Preços, oferta, categorias, contratos oficiais."],
+  ["tokenomist.ai","Freemium","Cronogramas de unlock."],
+  ["Coinglass","Grátis","Funding, open interest, liquidações."],
+  ["Dune","Grátis","Dashboards on-chain da comunidade (SQL)."],
+  ["Etherscan / Solscan / mempool.space","Grátis","Exploradores — sua fonte de verdade."]
+ ],
+ "Acompanhamento": [
+  ["Unchained (Laura Shin)","Podcast","Entrevistas aprofundadas, tom jornalístico."],
+  ["Bankless","Podcast/newsletter","Ecossistema Ethereum e DeFi — otimista por natureza."],
+  ["The Block / CoinDesk","Notícias","Cobertura diária do setor."],
+  ["Lyn Alden","Newsletter","Macro, liquidez e Bitcoin."],
+  ["Livecoins / Portal do Bitcoin","Notícias BR","Regulação e mercado no Brasil."]
+ ]
+};
+
+const GLOSS = [
+["Airdrop","Distribuição gratuita de tokens a usuários, geralmente para descentralizar a oferta ou premiar uso."],
+["AMM","Automated Market Maker: DEX que precifica por fórmula a partir de pools de liquidez."],
+["Bridge","Protocolo que transfere ativos entre blockchains; historicamente alvo de grandes hacks."],
+["CEX / DEX","Exchange centralizada (custódia de terceiro) / descentralizada (contratos inteligentes)."],
+["Cliff","Período inicial de vesting sem liberação; ao fim, um lote é liberado de uma vez."],
+["Cold wallet","Carteira cuja chave fica offline (ex.: hardware wallet)."],
+["FDV","Fully Diluted Valuation: preço × oferta total."],
+["Float","Oferta circulante ÷ oferta total."],
+["Funding rate","Taxa paga entre comprados e vendidos em contratos perpétuos; sinaliza alavancagem."],
+["Gas","Taxa paga para executar operações em uma blockchain."],
+["Halving","Redução pela metade da emissão de BTC a cada 210 mil blocos."],
+["Hash rate","Poder computacional que protege uma rede PoW."],
+["Impermanent loss","Perda relativa do provedor de liquidez quando os preços do pool divergem."],
+["KYC","Know Your Customer: verificação de identidade."],
+["L1 / L2","Blockchain base / rede que escala sobre a base herdando parte da segurança."],
+["Liquid staking","Staking que devolve um token negociável representando a posição."],
+["MEV","Valor extraído por quem ordena transações (ex.: ataques sandwich)."],
+["Multisig","Carteira que exige várias assinaturas (ex.: 2 de 3)."],
+["MVRV","Market cap ÷ Realized cap; mede lucro/prejuízo agregado."],
+["NVT","Market cap ÷ volume on-chain; “P/E” de uma rede."],
+["Open interest","Total de contratos derivativos em aberto."],
+["Oráculo","Serviço que leva dados externos (preços) para contratos inteligentes."],
+["PoW / PoS","Proof of Work / Proof of Stake — mecanismos de consenso."],
+["Prova de reservas","Demonstração de que a exchange detém os ativos dos clientes."],
+["PSAV","Prestadora de serviços de ativos virtuais (regulada pelo Banco Central)."],
+["Real yield","Rendimento descontado da inflação da oferta."],
+["Realized cap","Valor de cada moeda ao preço da última movimentação on-chain."],
+["RWA","Real World Assets: ativos tradicionais tokenizados."],
+["Rug pull","Golpe em que o time retira a liquidez ou vende tudo."],
+["Seed phrase","12–24 palavras que geram as chaves da carteira."],
+["Slippage","Diferença entre preço esperado e executado."],
+["Stablecoin","Token com paridade a uma moeda fiduciária."],
+["TGE","Token Generation Event: lançamento do token e início da negociação."],
+["TVL","Total Value Locked: capital depositado em um protocolo."],
+["Unlock","Liberação programada de tokens bloqueados."],
+["Vesting","Cronograma de liberação de tokens a time e investidores."]
+];
+
+const PLAN = [
+["S1","Módulo 1 completo. Ler o whitepaper. Instalar carteira de teste e restaurar pela seed."],
+["S2","Módulo 2. Abrir conta em exchange nacional, KYC, 2FA por app."],
+["S3","Módulo 3 (lições 1–3). Primeira compra com ordem limitada; planilha de custo médio; saque de teste."],
+["S4","Módulo 3 (lições 4–5). Swap simbólico numa L2; revogar aprovações; arquitetura de segurança."],
+["S5","Módulo 4 (lições 1–2). Calculadora de tokenomics em 3 tokens reais."],
+["S6","Módulo 4 (lições 3–5). Tabela de comparáveis; painel on-chain; cenários do BTC."],
+["S7","Módulo 5. Scorecard em 2 token sales; memo de uma delas."],
+["S8","Módulo 6 (lições 1–3). Política de investimento escrita; DCA configurado."],
+["S9","Módulo 6 (lições 4–5). Painel semanal em Excel/Power BI; diário de decisões."],
+["S10","Módulo 7. Conferir autorização da exchange no BC; conciliação tributária."],
+["S11","Módulo 8. Memo completo do primeiro satélite; crítica pelo Tutor."],
+["S12","Implantar carteira conforme política; agenda de rotina criada. Revisar a tese escrita na S1."]
+];
+
+/* ============ ESTADO ============ */
+const flat=[];C.forEach((m,mi)=>m.L.forEach((l,li)=>flat.push({mi,li,id:`l-${mi+1}-${li+1}`})));
+let S={done:{},quiz:{},open:{0:true},last:null};
+let saveRef=null, saving=false, pending=false;
+try{const raw=localStorage.getItem("cripto-curso-v1");if(raw)S=Object.assign(S,JSON.parse(raw))}catch(e){}
+
+async function initSync(){
+  try{
+    if(!window.claude||!window.claude.use)return;
+    const [db,user]=await Promise.all([claude.use("db"),claude.use("user")]);
+    if(!db||!user)return;
+    const uid=await user.id(); if(!uid)return;
+    saveRef=db.doc(`data/users/${uid}/progress`);
+    const snap=await saveRef.get();
+    if(snap.exists&&snap.data){
+      const d=snap.data;
+      S.done=Object.assign({},d.done||{},S.done);S.quiz=Object.assign({},d.quiz||{},S.quiz);
+      if(!S.last&&d.last)S.last=d.last;
+      render();
+    }
+    const el=document.getElementById("syncNote");if(el)el.textContent="Progresso sincronizado na sua conta Claude.";
+    persist();
+  }catch(e){}
+}
+function persist(){
+  try{localStorage.setItem("cripto-curso-v1",JSON.stringify(S))}catch(e){}
+  if(!saveRef)return;
+  if(saving){pending=true;return}
+  saving=true;
+  saveRef.set({done:S.done,quiz:S.quiz,last:S.last||null}).catch(()=>{}).finally(()=>{saving=false;if(pending){pending=false;persist()}});
+}
+
+/* ============ UI ============ */
+const app=document.getElementById("app");
+const $=s=>document.querySelector(s);
+const total=flat.length;
+function nDone(){return flat.filter(f=>S.done[f.id]).length}
+function updateProg(){const n=nDone();$("#progTxt").textContent=`${n}/${total}`;$("#progBar").style.width=(n/total*100)+"%"}
+function modDone(mi){return C[mi].L.filter((l,li)=>S.done[`l-${mi+1}-${li+1}`]).length}
+const check=`<svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M2.5 6.2l2.3 2.3 4.7-5"/></svg>`;
+
+function viewHome(){
+  const n=nDone();
+  const nextF=flat.find(f=>!S.done[f.id]);
+  const resumeF=S.last?flat.find(f=>f.id===S.last&&!S.done[f.id])||nextF:nextF;
+  const mins=C.reduce((a,m)=>a+m.L.reduce((b,l)=>b+l.min,0),0);
+  let h=`<section class="hero"><h1>Cripto, do zero à tese de investimento</h1>
+  <p>Um curso em ${C.length} blocos para quem já domina finanças: fundamentos, plataformas, valuation, token sales, risco e o regime brasileiro. Cada lição termina com prática e checagem.</p>
+  <div class="hero-stats"><div><b>${total}</b><span>lições</span></div><div><b>~${Math.round(mins/60)} h</b><span>de leitura</span></div><div><b>12</b><span>semanas no plano</span></div></div>`;
+  if(resumeF){const L=C[resumeF.mi].L[resumeF.li];h+=`<a class="resume" href="#${resumeF.id}"><div><small>${n?"Continue de onde parou":"Comece por aqui"}</small><b>${L.t}</b></div><span class="go">${n?"Continuar":"Começar"}</span></a>`}
+  else h+=`<div class="resume"><div><small>Curso concluído</small><b>Revise a tese que você escreveu na semana 1.</b></div></div>`;
+  h+=`</section><div class="chain">`;
+  C.forEach((m,mi)=>{
+    const d=modDone(mi),tot=m.L.length,mined=d===tot,open=S.open[mi];
+    h+=`<div class="block ${mined?"mined":""} ${open?"open":""}" data-m="${mi}">
+    <button class="block-head" aria-expanded="${!!open}" data-toggle="${mi}"><div class="cube"><i style="height:${d/tot*100}%"></i><span>${mi+1}</span></div>
+    <div><div class="block-title">${m.t}</div><div class="block-meta">${d}/${tot} lições · ${m.d}</div></div>
+    <svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></button>
+    <div class="lessons">${m.L.map((l,li)=>{const id=`l-${mi+1}-${li+1}`;return `<a class="lesson-link ${S.done[id]?"done":""}" href="#${id}"><span class="dot">${S.done[id]?check:""}</span><span>${l.t}</span><small>${l.min} min</small></a>`}).join("")}</div></div>`;
+  });
+  h+=`</div><p class="sync" id="syncNote">Progresso salvo neste dispositivo.</p>`;
+  app.innerHTML=h;
+  app.querySelectorAll("[data-toggle]").forEach(b=>b.onclick=()=>{const mi=+b.dataset.toggle;S.open[mi]=!S.open[mi];persist();const blk=b.parentElement;blk.classList.toggle("open");b.setAttribute("aria-expanded",blk.classList.contains("open"))});
+  if(saveRef)$("#syncNote").textContent="Progresso sincronizado na sua conta Claude.";
+}
+
+function viewLesson(id){
+  const idx=flat.findIndex(f=>f.id===id);if(idx<0)return viewHome();
+  const f=flat[idx],m=C[f.mi],L=m.L[f.li];
+  S.last=id;persist();
+  const prev=flat[idx-1],next=flat[idx+1];
+  const qs=S.quiz[id]||{};
+  let h=`<article class="lesson"><div class="crumbs"><a href="#trilha">Bloco ${f.mi+1}</a> · ${m.t}</div>
+  <h1>${L.t}</h1><div class="meta">Lição ${f.li+1} de ${m.L.length} · ${L.min} min</div>
+  <div class="prose">${L.b}</div>
+  <section class="panel"><h2><span class="ic">✎</span>Na prática</h2>${L.p}</section>
+  <section class="panel"><h2><span class="ic">?</span>Checagem</h2>${L.q.map((q,qi)=>{const ans=qs[qi];return `<div class="q ${ans!=null?"answered":""}" data-qi="${qi}"><p>${q.q}</p>${q.o.map((o,oi)=>`<button class="opt ${ans!=null&&oi===q.a?"right":""} ${ans!=null&&oi===ans&&ans!==q.a?"wrong":""}" data-oi="${oi}" ${ans!=null?"disabled":""}>${o}</button>`).join("")}<p class="expl">${q.e}</p></div>`}).join("")}</section>
+  <section class="panel"><h2><span class="ic">↗</span>Fontes e leitura</h2><ul class="src">${L.s.map(s=>`<li>${s}</li>`).join("")}</ul></section>
+  <div class="actions">${S.done[id]?`<button class="btn" id="undo">Marcar como não concluída</button>`:`<button class="btn okb" id="mark">Concluir lição</button>`}<a class="btn" href="#tutor" id="ask">Perguntar ao tutor</a></div>
+  <nav class="pager">${prev?`<a href="#${prev.id}"><small>Anterior</small>${C[prev.mi].L[prev.li].t}</a>`:""}${next?`<a class="next" href="#${next.id}"><small>Próxima</small>${C[next.mi].L[next.li].t}</a>`:""}</nav></article>`;
+  app.innerHTML=h;window.scrollTo(0,0);
+  app.querySelectorAll(".q").forEach(qd=>{const qi=+qd.dataset.qi;qd.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{
+    const oi=+b.dataset.oi,q=L.q[qi];S.quiz[id]=Object.assign({},S.quiz[id],{[qi]:oi});persist();
+    qd.classList.add("answered");qd.querySelectorAll(".opt").forEach((x,xi)=>{x.disabled=true;if(xi===q.a)x.classList.add("right");if(xi===oi&&oi!==q.a)x.classList.add("wrong")});
+  })});
+  const mk=$("#mark");if(mk)mk.onclick=()=>{S.done[id]=true;S.open[f.mi]=true;persist();updateProg();if(next)location.hash=next.id;else location.hash="trilha"};
+  const un=$("#undo");if(un)un.onclick=()=>{delete S.done[id];persist();updateProg();viewLesson(id)};
+  $("#ask").onclick=()=>{tutorCtx=L.t};
+}
+
+/* ---------- Ferramentas ---------- */
+let toolTab="score";
+const CRIT=[
+ ["Produto e problema","Produto funcionando, problema real, alguém paga por ele",3],
+ ["Time","Identificado, histórico verificável, entregas anteriores",3],
+ ["Investidores e termos","Investidores de qualidade, vesting longo, preço de entrada razoável",2],
+ ["Valuation de entrada","FDV da venda vs. comparáveis listados (P/F, P/S, usuários)",3],
+ ["Tokenomics","Float no TGE, unlocks, % comunidade vs. insiders",3],
+ ["Captura de valor","Token recebe fluxo (recompra, fees) — não só governança",3],
+ ["Tração orgânica","Usuários/receita sem depender de incentivos",2],
+ ["Segurança","Auditorias reconhecidas, bug bounty, sem incidentes",2],
+ ["Jurídico e acesso","Entidade clara, jurisdição, acesso legítimo para residente no Brasil",1]
+];
+const FLAGS=["Promete retorno ou preço mínimo garantido","Time anônimo e sem vesting","Contrato sem auditoria ou com mint/pausa em chave única","Insiders com mais de 50% e unlocks relevantes em menos de 12 meses","Pressão por urgência ou indicação remunerada","Liquidez removível pelo time"];
+let SC={v:CRIT.map(()=>3),f:FLAGS.map(()=>false)};
+const brl=v=>isFinite(v)?v.toLocaleString("pt-BR",{style:"currency",currency:"BRL",maximumFractionDigits:0}):"—";
+const num=(v,d=0)=>isFinite(v)?v.toLocaleString("pt-BR",{maximumFractionDigits:d}):"—";
+const pct=(v,d=1)=>isFinite(v)?(v*100).toLocaleString("pt-BR",{maximumFractionDigits:d})+"%":"—";
+
+function viewTools(){
+  const tabs=[["score","Scorecard de token sale"],["token","Tokenomics"],["size","Dimensionamento"],["tax","IR mensal"]];
+  let h=`<h1 class="section-title">Ferramentas</h1><p class="section-sub">Calculadoras para aplicar o que você estudou. Os números ficam só na tela.</p>
+  <div class="tool-tabs" role="toolbar">${tabs.map(([k,t])=>`<button aria-pressed="${toolTab===k}" data-tab="${k}">${t}</button>`).join("")}</div><div id="tool"></div>`;
+  app.innerHTML=h;
+  app.querySelectorAll("[data-tab]").forEach(b=>b.onclick=()=>{toolTab=b.dataset.tab;viewTools()});
+  ({score:toolScore,token:toolToken,size:toolSize,tax:toolTax})[toolTab]();
+}
+function toolScore(){
+  const el=$("#tool");
+  el.innerHTML=`<section class="panel"><h2>Critérios (0 a 5)</h2><p class="note">Pesos entre parênteses. Baseado no framework da lição 5.2.</p>
+  ${CRIT.map((c,i)=>`<div class="crit"><div class="crit-top">${c[0]} (peso ${c[2]})<span id="sv${i}">${SC.v[i]}</span></div><small>${c[1]}</small><input type="range" min="0" max="5" step="1" value="${SC.v[i]}" data-i="${i}" aria-label="${c[0]}"></div>`).join("")}</section>
+  <section class="panel"><h2>Red flags com poder de veto</h2>${FLAGS.map((f,i)=>`<label class="flag"><input type="checkbox" data-f="${i}" ${SC.f[i]?"checked":""}><span>${f}</span></label>`).join("")}</section>
+  <section class="panel"><h2>Resultado</h2><div class="out"><div><small>Pontuação</small><b id="scV">—</b></div><div><small>Red flags</small><b id="scF">—</b></div></div><div class="verdict" id="scVerdict"></div></section>`;
+  const calc=()=>{
+    const wt=CRIT.reduce((a,c)=>a+c[2],0),sc=CRIT.reduce((a,c,i)=>a+c[2]*SC.v[i],0)/(5*wt)*100;
+    const nf=SC.f.filter(Boolean).length;
+    $("#scV").textContent=num(sc,0)+"/100";$("#scF").textContent=nf;
+    const v=$("#scVerdict");
+    if(nf){v.className="verdict badv";v.textContent="Veto: há red flag crítica. Não participe, independentemente da pontuação."}
+    else if(sc>=75){v.className="verdict good";v.textContent="Elegível para posição de opção (até 0,5–1% da carteira cripto), com plano de saída definido antes do TGE."}
+    else if(sc>=55){v.className="verdict mid";v.textContent="Observar: acompanhe o pós-lançamento e reavalie com dados de tração e unlocks."}
+    else {v.className="verdict badv";v.textContent="Descartar: o risco não é remunerado no preço proposto."}
+  };
+  el.querySelectorAll("input[type=range]").forEach(r=>r.oninput=()=>{const i=+r.dataset.i;SC.v[i]=+r.value;$("#sv"+i).textContent=r.value;calc()});
+  el.querySelectorAll("[data-f]").forEach(c=>c.onchange=()=>{SC.f[+c.dataset.f]=c.checked;calc()});
+  calc();
+}
+function toolToken(){
+  const el=$("#tool");
+  el.innerHTML=`<section class="panel"><h2>Dados do token</h2>
+  <div class="grid2"><div class="field"><label for="tp">Preço (US$)</label><input type="number" id="tp" value="1.2" step="any" inputmode="decimal"></div>
+  <div class="field"><label for="tc">Oferta circulante (milhões)</label><input type="number" id="tc" value="250" step="any" inputmode="decimal"></div>
+  <div class="field"><label for="tt">Oferta total (milhões)</label><input type="number" id="tt" value="1000" step="any" inputmode="decimal"></div>
+  <div class="field"><label for="tu">Unlocks próximos 12 meses (milhões)</label><input type="number" id="tu" value="180" step="any" inputmode="decimal"></div>
+  <div class="field"><label for="ts">Yield de staking (% a.a.)</label><input type="number" id="ts" value="6" step="any" inputmode="decimal"></div>
+  <div class="field"><label for="tv">Volume diário médio (US$ milhões)</label><input type="number" id="tv" value="25" step="any" inputmode="decimal"></div>
+  <div class="field"><label for="tr">Receita anualizada do protocolo (US$ milhões)</label><input type="number" id="tr" value="40" step="any" inputmode="decimal"><small>Opcional — para P/S</small></div></div></section>
+  <section class="panel"><h2>Leitura</h2><div class="out" id="tOut"></div><div class="verdict" id="tV"></div></section>`;
+  const g=id=>parseFloat($("#"+id).value);
+  const calc=()=>{
+    const p=g("tp"),c=g("tc"),t=g("tt"),u=g("tu"),s=g("ts")/100,v=g("tv"),r=g("tr");
+    const mc=p*c,fdv=p*t,fl=c/t,dil=u/c,ry=s-dil,days=(u/12*p)/v,ps=fdv/r;
+    $("#tOut").innerHTML=[["Market cap","US$ "+num(mc,0)+" mi"],["FDV","US$ "+num(fdv,0)+" mi"],["Float",pct(fl)],["Overhang","US$ "+num(fdv-mc,0)+" mi"],["Diluição 12m",pct(dil)],["Real yield",pct(ry)],["Unlock mensal em dias de volume",num(days,1)],["P/S (FDV)",isFinite(ps)&&r>0?num(ps,1)+"×":"—"]].map(([a,b])=>`<div><small>${a}</small><b>${b}</b></div>`).join("");
+    const v2=$("#tV");
+    if(fl<.25&&dil>.3){v2.className="verdict badv";v2.textContent=`Low float, high FDV: a demanda precisa crescer ~${pct(dil,0)} em 12 meses só para o preço ficar estável.`}
+    else if(dil>.15||days>3){v2.className="verdict mid";v2.textContent="Diluição relevante: dimensione considerando o calendário de unlocks e entre de forma escalonada."}
+    else {v2.className="verdict good";v2.textContent="Estrutura de oferta saudável. O foco da análise passa a ser demanda e captura de valor."}
+  };
+  el.querySelectorAll("input").forEach(i=>i.oninput=calc);calc();
+}
+function toolSize(){
+  const el=$("#tool");
+  el.innerHTML=`<section class="panel"><h2>Quanto você pode alocar</h2>
+  <div class="grid2"><div class="field"><label for="sp">Patrimônio financeiro (R$)</label><input type="number" id="sp" value="2000000" step="any" inputmode="decimal"></div>
+  <div class="field"><label for="sl">Perda máxima aceitável (R$)</label><input type="number" id="sl" value="80000" step="any" inputmode="decimal"><small>Quanto perder sem mudar decisões de vida</small></div></div>
+  <div class="field"><label for="sd">Drawdown de cenário: <span id="sdv">80%</span></label><input type="range" id="sd" min="50" max="95" value="80"><small>BTC: −77% a −93% nos piores ciclos. Altcoins: 90%+.</small></div>
+  <div class="grid2"><div class="field"><label for="sc">% core (BTC/ETH)</label><input type="number" id="sc" value="70" inputmode="decimal"></div><div class="field"><label for="ss">% satélites</label><input type="number" id="ss" value="25" inputmode="decimal"></div></div></section>
+  <section class="panel"><h2>Resultado</h2><div class="out" id="sOut"></div><div class="verdict" id="sV"></div></section>`;
+  const g=id=>parseFloat($("#"+id).value);
+  const calc=()=>{
+    const P=g("sp"),Lm=g("sl"),D=g("sd")/100,c=g("sc")/100,s=g("ss")/100;$("#sdv").textContent=Math.round(D*100)+"%";
+    const max=Lm/D,share=max/P,o=Math.max(0,1-c-s);
+    $("#sOut").innerHTML=[["Alocação máxima",brl(max)],["% do patrimônio",pct(share)],["Core",brl(max*c)],["Satélites",brl(max*s)],["Opções/token sales",brl(max*o)],["Perda no cenário",brl(max*D)]].map(([a,b])=>`<div><small>${a}</small><b>${b}</b></div>`).join("");
+    const v=$("#sV");
+    if(share>.1){v.className="verdict badv";v.textContent="Acima de 10% do patrimônio: exige convicção documentada, horizonte longo e liquidez fora de cripto para 2–3 anos."}
+    else if(share>.05){v.className="verdict mid";v.textContent="Entre 5% e 10%: posição relevante. Entre via DCA e mantenha disciplina de rebalanceamento."}
+    else {v.className="verdict good";v.textContent="Até 5%: faixa compatível com carteiras diversificadas. O drawdown não compromete o plano patrimonial."}
+  };
+  el.querySelectorAll("input").forEach(i=>i.oninput=calc);calc();
+}
+function toolTax(){
+  const el=$("#tool");
+  el.innerHTML=`<section class="panel"><h2>IR sobre vendas no mês</h2>
+  <div class="field"><label for="xo">Onde vendeu</label><select id="xo"><option value="br">Exchange nacional</option><option value="ex">Exchange no exterior (Lei 14.754)</option></select></div>
+  <div class="grid2"><div class="field"><label for="xv">Total vendido no mês (R$)</label><input type="number" id="xv" value="36000" step="any" inputmode="decimal"><small>Some todas as plataformas nacionais</small></div>
+  <div class="field"><label for="xc">Custo de aquisição do que foi vendido (R$)</label><input type="number" id="xc" value="24000" step="any" inputmode="decimal"><small>Pelo custo médio</small></div></div></section>
+  <section class="panel"><h2>Resultado</h2><div class="out" id="xOut"></div><div class="verdict" id="xV"></div><p class="note" style="margin-top:12px">Simulação simplificada. Não considera compensação de prejuízos nem casos específicos. Valide com seu contador.</p></section>`;
+  const g=id=>parseFloat($("#"+id).value);
+  const prog=gain=>{const br=[[5e6,.15],[1e7,.175],[3e7,.20],[Infinity,.225]];let t=0,prev=0;for(const [lim,r] of br){if(gain>prev){t+=(Math.min(gain,lim)-prev)*r;prev=lim}}return t};
+  const calc=()=>{
+    const o=$("#xo").value,V=g("xv"),Cc=g("xc"),G=Math.max(0,V-Cc);
+    let tax,msg,cls;
+    if(o==="br"){
+      if(V<=35000){tax=0;cls="good";msg=`Isento: vendas no mês (${brl(V)}) dentro do limite de R$35 mil. Declare a posição na DIRPF normalmente.`}
+      else {tax=prog(G);cls="mid";msg=`Tributável: vendas acima de R$35 mil. DARF código 4600 até o último dia útil do mês seguinte.`;
+        const over=V-35000;if(over<V*.15)msg+=` Você passou do limite em ${brl(over)} — adiar essa parcela para o mês seguinte zeraria o imposto deste mês.`;}
+    } else {tax=G*.15;cls="mid";msg="Exterior: 15% sobre o ganho, apurado na declaração anual (com compensação de perdas do ano). Não há isenção mensal."}
+    $("#xOut").innerHTML=[["Ganho de capital",brl(G)],["IR estimado",brl(tax)],["Alíquota efetiva s/ ganho",G>0?pct(tax/G):"—"],["Caixa líquido da venda",brl(V-tax)]].map(([a,b])=>`<div><small>${a}</small><b>${b}</b></div>`).join("");
+    const v=$("#xV");v.className="verdict "+cls;v.textContent=msg;
+  };
+  el.querySelectorAll("input,select").forEach(i=>i.oninput=calc);calc();
+}
+
+/* ---------- Plano, Biblioteca, Glossário ---------- */
+function viewPlan(){
+  app.innerHTML=`<h1 class="section-title">Plano de 12 semanas</h1><p class="section-sub">Cerca de 3–4 horas por semana: leitura nos dias úteis, prática no fim de semana. Valores de prática sempre simbólicos até a semana 12.</p>
+  <section class="panel">${PLAN.map(([w,t])=>`<div class="plan-week"><b>${w}</b><span>${t}</span></div>`).join("")}</section>
+  <section class="panel"><h2>Metodologia do curso</h2><ul><li><strong>Conceito → prática → checagem</strong> em cada lição, para fixar com aplicação imediata.</li><li><strong>Fontes primárias primeiro</strong>: whitepapers, dados on-chain e normas, antes de opiniões.</li><li><strong>Valores de teste</strong> em toda primeira operação: o custo de aprender errando deve ser simbólico.</li><li><strong>Entregáveis escritos</strong>: política de investimento, memos e diário — o que não está escrito não é processo.</li></ul></section>`;
+}
+function viewLib(){
+  let h=`<div class="lib"><h1 class="section-title">Biblioteca</h1><p class="section-sub">Literatura, pesquisa e ferramentas selecionadas — incluindo o contraponto cético.</p>`;
+  for(const [sec,items] of Object.entries(LIB)){h+=`<h2>${sec}</h2>`+items.map(([t,w,p])=>`<div class="item"><b>${t}</b><span class="who">${w}</span><p>${p}</p></div>`).join("")}
+  h+=`<h2 id="glossario">Glossário</h2><input type="text" class="search" id="gq" placeholder="Buscar termo" aria-label="Buscar no glossário"><dl class="gl" id="gl"></dl></div>`;
+  app.innerHTML=h;
+  const draw=q=>{q=(q||"").toLowerCase();$("#gl").innerHTML=GLOSS.filter(([t,d])=>!q||t.toLowerCase().includes(q)||d.toLowerCase().includes(q)).map(([t,d])=>`<div><dt>${t}</dt><dd>${d}</dd></div>`).join("")||`<div><dd>Nenhum termo encontrado. Tente outra palavra ou pergunte ao Tutor.</dd></div>`};
+  $("#gq").oninput=e=>draw(e.target.value);draw("");
+}
+
+/* ---------- Tutor ---------- */
+let tutorCtx=null, sampleFn=undefined, ctrl=null;
+async function viewTutor(){
+  const ctx=tutorCtx;
+  app.innerHTML=`<h1 class="section-title">Tutor</h1><p class="section-sub">Tire dúvidas, peça exemplos ou cole um memo para receber crítica de um comitê cético.${ctx?` Contexto: <strong>${ctx}</strong>.`:""}</p>
+  <div id="tutorBox"><div style="margin-bottom:10px">${["Explique FDV vs. market cap com um exemplo numérico","Critique meu memo como um comitê de investimentos","Como o ETH captura valor das L2s?","Monte uma query SQL no Dune para holders de um token"].map(c=>`<button class="chip">${c}</button>`).join("")}</div>
+  <div class="field"><label for="tq">Sua pergunta</label><textarea id="tq" placeholder="Ex.: Como comparar o P/S de uma DEX com o de uma corretora listada?"></textarea></div>
+  <div class="actions" style="margin:8px 0"><button class="btn primary" id="tgo">Perguntar</button><button class="btn" id="tstop" style="display:none">Parar</button></div>
+  <div class="answer" id="tans"></div><p class="note" id="tnote">O tutor usa o seu acesso ao Claude. Conteúdo educacional — não é recomendação de investimento.</p></div>`;
+  app.querySelectorAll(".chip").forEach(c=>c.onclick=()=>{$("#tq").value=c.textContent;$("#tq").focus()});
+  if(sampleFn===undefined){try{sampleFn=window.claude&&window.claude.use?await claude.use("sample"):null}catch(e){sampleFn=null}}
+  if(!sampleFn){$("#tutorBox").innerHTML=`<section class="panel"><h2>Tutor indisponível aqui</h2><p>Nesta versão de área de trabalho o tutor fica desligado, porque ele usa a sua conta Claude. Para usar o tutor, abra a versão online do curso:</p><p><a class="btn primary" href="https://claude.ai/artifact/YMMPpciLpqYx5jCDUiMiDX" target="_blank" rel="noopener">Abrir curso no Claude</a></p></section>`;return}
+  $("#tgo").onclick=async()=>{
+    const q=$("#tq").value.trim();if(!q){$("#tq").focus();return}
+    const ans=$("#tans");ans.style.display="block";ans.textContent="Pensando…";
+    ctrl=new AbortController();$("#tstop").style.display="";$("#tgo").disabled=true;
+    $("#tstop").onclick=()=>ctrl.abort();
+    const prompt=`Você é tutor de um curso de criptoativos para um executivo de finanças sênior (CFO, FP&A) no Brasil. Responda em português do Brasil, de forma direta e estruturada, começando pela conclusão. Assuma domínio de finanças corporativas; traduza conceitos cripto para análogos financeiros (P&L, fluxo de caixa, diluição, valuation). Quando citar Excel, use sintaxe em português (SOMASES, PROCV). Não recomende comprar ativos específicos; discuta riscos. Use texto simples, sem markdown pesado.${ctx?`\nLição atual: ${ctx}.`:""}\n\nPergunta:\n${q}`;
+    try{const r=await sampleFn(prompt,{signal:ctrl.signal,modelTier:"default",cache:false,onText:({text})=>{ans.textContent=text}});ans.textContent=r.text}
+    catch(e){if(e&&e.code==="not_granted"){ans.textContent="O acesso ao Claude não foi permitido nesta sessão. Recarregue a página para tentar de novo."}else if(e&&e.code==="rate_limited"){ans.textContent="Muitas perguntas em sequência. Aguarde um minuto e tente de novo."}else if(e&&e.name==="AbortError"||e&&e.code==="aborted"){if(e.text)ans.textContent=e.text}else{ans.textContent=(e&&e.text)||"Não foi possível obter a resposta. Tente novamente."}}
+    finally{$("#tstop").style.display="none";$("#tgo").disabled=false}
+  };
+}
+
+/* ---------- Router ---------- */
+function render(){
+  const h=(location.hash||"#trilha").slice(1);
+  const sec=h.startsWith("l-")?"trilha":h==="glossario"?"biblioteca":h;
+  document.querySelectorAll(".nav a").forEach(a=>{if(a.dataset.r===sec)a.setAttribute("aria-current","page");else a.removeAttribute("aria-current")});
+  updateProg();
+  if(h.startsWith("l-"))viewLesson(h);
+  else if(h==="ferramentas")viewTools();
+  else if(h==="plano")viewPlan();
+  else if(h==="biblioteca"||h==="glossario"){viewLib();if(h==="glossario")setTimeout(()=>{const g=document.getElementById("glossario");g&&g.scrollIntoView()},0)}
+  else if(h==="tutor")viewTutor();
+  else viewHome();
+  if(!h.startsWith("l-")&&h!=="glossario")window.scrollTo(0,0);
+  if(h!=="tutor"&&!h.startsWith("l-"))tutorCtx=null;
+}
+window.addEventListener("hashchange",render);
+
+/* tema */
+(function(){const r=document.documentElement;let t=null;try{t=localStorage.getItem("cripto-tema")}catch(e){}if(t)r.dataset.theme=t;
+$("#themeBtn").onclick=()=>{const dark=r.dataset.theme?r.dataset.theme==="dark":matchMedia("(prefers-color-scheme: dark)").matches;r.dataset.theme=dark?"light":"dark";try{localStorage.setItem("cripto-tema",r.dataset.theme)}catch(e){}}})();
+
+render();initSync();
+if("serviceWorker" in navigator&&location.protocol.startsWith("http")){navigator.serviceWorker.register("sw.js").catch(()=>{})}
+</script>
+</body>
+</html>
